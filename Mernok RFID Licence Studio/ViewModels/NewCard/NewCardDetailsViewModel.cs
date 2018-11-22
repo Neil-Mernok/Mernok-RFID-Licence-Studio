@@ -46,7 +46,7 @@ namespace Mernok_RFID_Licence_Studio
             WarningDateMax = DateTime.Now.AddYears(1);
             DateStart = DateTime.Now;
 
-        control.DataContext = this;
+            control.DataContext = this;
             
             _viewInstance = (NewCardDetails1View)control;
         }

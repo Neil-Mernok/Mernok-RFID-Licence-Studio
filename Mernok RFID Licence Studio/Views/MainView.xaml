@@ -39,8 +39,8 @@
         <Views:CardFormatError x:Name="CardError" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
         <Views:CardProgramFail x:Name="CardProgramFail" Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="Collapsed"/>
         <Views:IssuerCardPrompView x:Name="IssuerCardPrompView" Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="Collapsed"/>
-        <Views:ExitPromptView x:Name="ExitPromptView" Grid.Row="1" Grid.Column="1" Height="300" Width="500" Visibility="Collapsed"/>
-        <Views:MenuView x:Name="MenuView" Grid.Row="1" Grid.Column="1" Height="300" Width="500" Visibility="Collapsed" />
+        <Views:ExitPromptView x:Name="ExitPromptView" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
+        <Views:MenuView x:Name="MenuView"  Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed" />
         <Views:EditCardWarningView x:Name="EditCardWarningView" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Visibility="Collapsed"/>
         <Views:NoRWDView x:Name="NoRWDView" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" Visibility="Visible"/>
         <Image HorizontalAlignment="Right" Height="90" Grid.Row="2" VerticalAlignment="Bottom"  Margin="20" Source="/Mernok RFID Licence Studio;component/Resources/Images/Mernok_logo_2016.png"/>

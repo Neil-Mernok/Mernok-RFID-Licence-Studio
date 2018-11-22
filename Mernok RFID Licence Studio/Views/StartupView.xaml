@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mernok_RFID_Licence_Studio"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1140" >
+             d:DesignHeight="600" d:DesignWidth="1140">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="1"/>
+                <GradientStop Color="#FF7A7A7A"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
 
             <RowDefinition Height="0.9*"/>
@@ -49,7 +55,8 @@
             <ProgressBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
-                        <RotateTransform  CenterY="0.5" CenterX="0.5" Angle="270"/><!---->
+                        <RotateTransform  CenterY="0.5" CenterX="0.5" Angle="270"/>
+                        <!---->
                     </LinearGradientBrush.RelativeTransform>
                     <GradientStop Color="#FF005195" Offset="0"/>
                     <GradientStop Color="Black" Offset="1.5"/>

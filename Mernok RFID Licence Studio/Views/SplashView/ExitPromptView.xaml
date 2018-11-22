@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mernok_RFID_Licence_Studio"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Background="OrangeRed">
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="1140" Background="#02000000">
 
 
     <UserControl.Resources>
@@ -18,8 +18,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
+    <Grid Height="300" Width="500" Background="OrangeRed">
+        <Grid.ColumnDefinitions >
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>

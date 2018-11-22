@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mernok_RFID_Licence_Studio"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Background="Crimson">
+             d:DesignHeight="600" d:DesignWidth="1140" Background="#02000000" >
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Height="300" Width="500" Background="Crimson">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
