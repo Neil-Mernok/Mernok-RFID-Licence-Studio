@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using MernokAssets;
 using MernokClients;
 using MernokProducts;
+using System.Windows.Media;
 
 namespace Mernok_RFID_Licence_Studio
 {
@@ -134,14 +135,14 @@ namespace Mernok_RFID_Licence_Studio
                     ProductList_ret = (int)VMReturnData.CopiedVMCardDetails.ProductCode;
                     OperationalArea = VMReturnData.CopiedVMCardDetails.OperationalArea.ToString();
                     TrainDate = VMReturnData.CopiedVMCardDetails.Training_Date;
-                    AccessLevelnum = (uint)Math.Abs(AccessLevelList.IndexOf( ((RFIDCardInfoRead.AccessLevel_enum)VMReturnData.CopiedVMCardDetails.AccessLevel).ToString().Replace("_", " ")));
+                    AccessLevelnum = (int)Math.Abs(AccessLevelList.IndexOf( ((RFIDCardInfoRead.AccessLevel_enum)VMReturnData.CopiedVMCardDetails.AccessLevel).ToString().Replace("_", " ")));
                     VehicleAccessType_ret = VMReturnData.CopiedVMCardDetails.Options;
                     ExpiryDate = VMReturnData.CopiedVMCardDetails.Expiry_Date;
                     WarningDate = VMReturnData.CopiedVMCardDetails.Warning_Date;
                     onetimeWrite = true;
                 }
 
-                if((OperatorName!=null&&OperatorName!="")&&(ClientCode!=null)&& ClientCodenum > -1 && (ClientSitenum > -1)&& (OperationalArea != null && OperationalArea != ""))
+                if(Conditioning())
                 {
                     VMReturnData.NextButtonEnabled = true;
                     VMReturnData.VMCardDetails.OperatorName = OperatorName;
@@ -172,7 +173,95 @@ namespace Mernok_RFID_Licence_Studio
             }
         }
 
+        bool Conditioning()
+        {
+            bool name, clientgroup, clientsite, OpArea, level, Type, product;
 
+
+            if (OperatorName != null && OperatorName != "")
+            {
+                name = true;
+                NameColour = Brushes.White;
+
+            }
+            else
+            {
+                name = false;
+                NameColour = Brushes.OrangeRed;
+            }
+
+            if(ClientCodenum > 0) 
+            {
+                clientgroup = true;
+                ClientColour = Brushes.White;
+            }
+            else
+            {
+                clientgroup = false;
+                ClientColour = Brushes.OrangeRed;
+            }
+
+            if (ClientSite[ClientSitenum] != "None")
+            {
+                clientsite = true;
+                ClientSColour = Brushes.White;
+            }
+            else
+            {
+                clientsite = false;
+                ClientSColour = Brushes.OrangeRed;
+            }
+
+            if (OperationalArea != null && OperationalArea != "")
+            {
+                OpArea = true;
+                OperColour = Brushes.White;
+            }
+            else
+            {
+                OpArea = false;
+                OperColour = Brushes.OrangeRed;
+            }
+
+            if (AccessLevelnum > 0)
+            {
+                level = true;
+                AccessColour = Brushes.White;
+            }
+            else
+            {
+                level = false;
+                AccessColour = Brushes.OrangeRed;
+            }
+
+            if (VehicleAccessType_ret > 0)
+            {
+                Type = true;
+                VehicleAccessColour = Brushes.White;
+            }
+            else
+            {
+                Type = false;
+                VehicleAccessColour = Brushes.OrangeRed;
+            }
+
+            if (ProductList_ret > 0)
+            {
+                product = true;
+                ProductColour = Brushes.White;
+            }
+            else
+            {
+                product = false;
+                ProductColour = Brushes.OrangeRed;
+            }
+
+            if (name && clientsite && clientgroup && OpArea && Type && level && product)
+                return true;
+            else
+                return false;
+
+        }
 
         #region Binding properties
 
@@ -318,11 +407,58 @@ namespace Mernok_RFID_Licence_Studio
             set { _DateStart = value; RaisePropertyChanged("DateStart"); }
         }
 
+        private Brush _ProductColour;
+
+        public Brush ProductColour
+        {
+            get { return _ProductColour; }
+            set { _ProductColour = value; base.RaisePropertyChanged("ProductColour"); }
+        }
+
+        private Brush _NameColour;
+
+        public Brush NameColour
+        {
+            get { return _NameColour; }
+            set { _NameColour = value; base.RaisePropertyChanged("NameColour"); }
+        }
 
 
-        private uint _AccessLevelnum;
+        private Brush _ClientColour;
 
-        public uint AccessLevelnum
+        public Brush ClientColour
+        {
+            get { return _ClientColour; }
+            set { _ClientColour = value; base.RaisePropertyChanged("ClientColour"); }
+        }
+
+        private Brush _OperColour;
+
+        public Brush OperColour
+        {
+            get { return _OperColour; }
+            set { _OperColour = value; base.RaisePropertyChanged("OperColour"); }
+        }
+
+        private Brush _AccessColour;
+
+        public Brush AccessColour
+        {
+            get { return _AccessColour; }
+            set { _AccessColour = value; base.RaisePropertyChanged("AccessColour"); }
+        }
+
+        private Brush _VehicleAccessColour;
+
+        public Brush VehicleAccessColour
+        {
+            get { return _VehicleAccessColour; }
+            set { _VehicleAccessColour = value; base.RaisePropertyChanged("VehicleAccessColour"); }
+        }
+
+        private int _AccessLevelnum;
+
+        public int AccessLevelnum
         {
             get { return _AccessLevelnum; }
             set { _AccessLevelnum = value; RaisePropertyChanged("AccessLevelnum"); }
@@ -370,6 +506,9 @@ namespace Mernok_RFID_Licence_Studio
                 base.RaisePropertyChanged("UID");
             }
         }
+
+        private SolidColorBrush _ClientSColour;
+        public SolidColorBrush ClientSColour { get { return _ClientSColour; } set { _ClientSColour = value; RaisePropertyChanged("UID"); } }
         #endregion
     }
 
