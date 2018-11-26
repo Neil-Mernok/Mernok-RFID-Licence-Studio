@@ -48,7 +48,7 @@
         <!--<TextBox Text="{Binding ClientCode, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"   FontSize="25" Margin="5" Width="380"/>-->
         <ComboBox  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientCode}" 
                    SelectedIndex="{Binding ClientCodenum}" SelectionChanged="ComboBox_SelectionChanged"
-                   Background="{Binding ClientColour,Mode=TwoWay}"/>
+                   BorderBrush="Red" BorderThickness="2"/>
 
 
         <!--Row 5-->
@@ -78,7 +78,7 @@
         <Label Content="Product Code:"   FontSize="25" Grid.Row="9" HorizontalAlignment="Right"/>
         <ComboBox  HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding ProductCode}" 
                    SelectedIndex="{Binding ProductList_ret}"  Margin="5" SelectionChanged="ComboBox_SelectionChanged"
-                   Background="{Binding ProductColour,Mode=TwoWay}">
+                   BorderBrush="{Binding ProductColour,Mode=TwoWay}" BorderThickness="2">
         </ComboBox>
         
         <!--Row 10-->
