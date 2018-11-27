@@ -40,36 +40,45 @@
         <Label Content="Fill in card Details:" FontSize="45" Grid.Row="2" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="5"/>
         <!--Row 3-->
         <Label Content="Operator Name:" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="0" FontSize="25" Margin="2"/>
-        <TextBox Text="{Binding OperatorName, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5" FontSize="25" Width="380"/>
+        <TextBox Text="{Binding OperatorName, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5" FontSize="25" Width="380" TextChanged="TextBox_TextChanged" Background="{Binding NameColour,Mode=TwoWay}"/>
 
 
         <!--Row 4-->
         <Label Content="Client Group:" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="0" FontSize="25" Margin="2"/>
         <!--<TextBox Text="{Binding ClientCode, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"   FontSize="25" Margin="5" Width="380"/>-->
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientCode}" SelectedIndex="{Binding ClientCodenum}"/>
+        <ComboBox  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientCode}" 
+                   SelectedIndex="{Binding ClientCodenum}" SelectionChanged="ComboBox_SelectionChanged"
+                   BorderBrush="Red" BorderThickness="2"/>
 
 
         <!--Row 5-->
         <Label Content="Client site:" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="0" FontSize="25" Margin="2"/>
         <!--<TextBox Text="{Binding ClientSite, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"   FontSize="25" Margin="5" Width="380"/>-->
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientSite}" SelectedIndex="{Binding ClientSitenum}"/>
+        <ComboBox  HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientSite}" SelectedIndex="{Binding ClientSitenum}" 
+                   SelectionChanged="ComboBox_SelectionChanged"
+                   Background="{Binding ClientSColour,Mode=TwoWay}"/>
         <!--Row 6-->
         <Label Content="Operational Area:" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="0" FontSize="25" Margin="2"/>
-        <TextBox Text="{Binding OperationalArea, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" FontSize="25" Margin="5" Width="380"/>
+        <TextBox Text="{Binding OperationalArea, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" FontSize="25" Margin="5" Width="380" TextChanged="TextBox_TextChanged" Background="{Binding OperColour,Mode=TwoWay}"/>
 
         <!--Row 7-->
         <Label Content="Access Level:" HorizontalContentAlignment="Right" Grid.Row="7" Grid.Column="0" FontSize="25" Margin="2"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding AccessLevelList}" SelectedIndex="{Binding AccessLevelnum}">
+        <ComboBox  HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding AccessLevelList}" 
+                   SelectedIndex="{Binding AccessLevelnum}" SelectionChanged="ComboBox_SelectionChanged" Background="{Binding AccessColour,Mode=TwoWay}">
         </ComboBox>
 
         <!--Row 8-->
         <Label Content="Vehicle Access Type:" HorizontalContentAlignment="Right" Grid.Row="8" Grid.Column="0" FontSize="25" Margin="5"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding VehicleAccessList}" SelectedIndex="{Binding VehicleAccessType_ret}"  Margin="5">
+        <ComboBox  HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding VehicleAccessList}" 
+                   SelectedIndex="{Binding VehicleAccessType_ret}"  Margin="5" SelectionChanged="ComboBox_SelectionChanged"
+                   Background="{Binding VehicleAccessColour,Mode=TwoWay}">
         </ComboBox>
         
         <!--Row 9-->
         <Label Content="Product Code:"   FontSize="25" Grid.Row="9" HorizontalAlignment="Right"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding ProductCode}" SelectedIndex="{Binding ProductList_ret}"  Margin="5">
+        <ComboBox  HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding ProductCode}" 
+                   SelectedIndex="{Binding ProductList_ret}"  Margin="5" SelectionChanged="ComboBox_SelectionChanged"
+                   BorderBrush="{Binding ProductColour,Mode=TwoWay}" BorderThickness="2">
         </ComboBox>
         
         <!--Row 10-->
