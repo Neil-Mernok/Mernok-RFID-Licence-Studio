@@ -51,7 +51,10 @@ namespace Mernok_RFID_Licence_Studio
             TagTypesL.MernokAssetGroups = TagTypesL.MernokAssetGroups.OrderBy(t => t.GroupNumber).ToList();
             #endregion
 
-           
+            Console.WriteLine();
+            //  <-- Keep this information secure! -->
+            Console.WriteLine("MachineName: {0}", Environment.MachineName);
+
             //Start main 
             SystemVMReturnData = new ViewModelReturnData();
 
