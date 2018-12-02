@@ -42,11 +42,15 @@ namespace Mernok_RFID_Licence_Studio
                 View.Visibility = Visibility.Visible;
 
                 #region NavigationBar details
-                VMReturnData.ViewTitle = "Licence Details";
-                VMReturnData.SubTitle = "";
+                //               VMReturnData.ViewTitle = "Licence Details";
+                VMReturnData.ViewTitle = VMReturnData.cardInfoRead.UIDtoString(VMReturnData.prevUID);
+                VMReturnData.SubTitle = "Licence Details";
                 VMReturnData.CurrentPageNumber = 1;
                 VMReturnData.TotalPageNumber = 1;
                 VMReturnData.MenuButtonEnabled = Visibility.Visible;
+                VMReturnData.HelpButtonEnabled = Visibility.Hidden;
+                VMReturnData.NextButtonEnabled = false;
+                VMReturnData.BackButtonEnabled = false;
                 #endregion
 
                 #region menu buttons

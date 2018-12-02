@@ -13,7 +13,7 @@ namespace Mernok_RFID_Licence_Studio
     class RuleTemplateViewModel : ViewModel
     {
         private RuleTemplateView _viewInstance;
-
+        #region Properties
         private String _ruleTitle;
         public String RuleTitle
         {
@@ -122,17 +122,29 @@ namespace Mernok_RFID_Licence_Studio
             set { _MenuVisable = value; base.RaisePropertyChanged("MenuVisable"); }
         }
 
+        Visibility _HelpVisable = Visibility.Hidden;
+        public Visibility HelpVisable
+        {
+            get
+            {
+                return _HelpVisable;
+            }
+            set { _HelpVisable = value; base.RaisePropertyChanged("HelpVisable"); }
+        }
 
+        #endregion
         #region Button Init
         public ICommand ButtonNextPage { get; private set; }
         public ICommand ButtonPreviousPage { get; private set; }
         public ICommand ButtonBack { get; private set; }
         public ICommand ButtonRuleMenu { get; private set; }
+        public ICommand ButtonHelp { get; private set; }
 
         private bool _buttonNextPagePressed = false;
         private bool _buttonPreviousPagePressed = false;
         private bool _buttonBackPressed = false;
         private bool _buttonRuleMenuPressed = false;
+        private bool _buttonHelpPressed = false;
         #endregion
 
         public RuleTemplateViewModel(UserControl control) : base(control)
@@ -141,6 +153,7 @@ namespace Mernok_RFID_Licence_Studio
             ButtonPreviousPage = new DelegateCommand(Button_Previous_Page_Handler);
             ButtonBack = new DelegateCommand(Button_Back_Handler);
             ButtonRuleMenu = new DelegateCommand(Button_Rule_Menu_Handler);
+            ButtonHelp = new DelegateCommand(Button_Help_Handler);
 
             control.DataContext = this;
             _viewInstance = (RuleTemplateView)control;
@@ -173,6 +186,7 @@ namespace Mernok_RFID_Licence_Studio
                 NextVisible = (Visibility)Convert.ToInt16(!VMReturnData.NextButtonEnabled);
                 PreviousVisible = (Visibility)Convert.ToInt16(!VMReturnData.BackButtonEnabled);
                 MenuVisable = VMReturnData.MenuButtonEnabled;
+                HelpVisable = VMReturnData.HelpButtonEnabled;
 
                 if (_buttonBackPressed)
                 {
@@ -233,9 +247,14 @@ namespace Mernok_RFID_Licence_Studio
                 else if (_buttonRuleMenuPressed)
                 {
                     _buttonRuleMenuPressed = false;
-                    VMReturnData.MenuView_Active = true;
+                    VMReturnData.MenuButton();
                     //VMReturnData.View_Selected[(int)ViewModelReturnData.View_Selected_Enum.Rule_Menu_View_Selected] = true;
 
+                }
+                else if(_buttonHelpPressed)
+                {
+                    _buttonHelpPressed = false;
+                    VMReturnData.HelpButton();
                 }
 
                 //if (VMReturnData.View_Selected[(int)ViewModelReturnData.View_Selected_Enum.PDRules_View_Selected])
@@ -314,6 +333,11 @@ namespace Mernok_RFID_Licence_Studio
         private void Button_Rule_Menu_Handler()
         {
             _buttonRuleMenuPressed = true;
+        }
+
+        private void Button_Help_Handler()
+        {
+            _buttonHelpPressed = true;
         }
         #endregion
     }

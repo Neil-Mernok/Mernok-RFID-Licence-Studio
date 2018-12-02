@@ -60,7 +60,9 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.SubTitle = "Issuer details";
                 VMReturnData.CurrentPageNumber = 1;
                 VMReturnData.TotalPageNumber = 4;
-                VMReturnData.MenuButtonEnabled = Visibility.Visible;
+                VMReturnData.MenuButtonEnabled = Visibility.Hidden;
+                VMReturnData.HelpButtonEnabled = Visibility.Visible;
+                VMReturnData.BackButtonEnabled = false;
                 #endregion
 
                 #region menu buttons
@@ -70,14 +72,13 @@ namespace Mernok_RFID_Licence_Studio
                 #endregion
 
 
-                CardinFieldUID = VMReturnData.UID;
-                if (VMReturnData.NewCardUID == 0)
-                    VMReturnData.NewCardUID = CardinFieldUID;
+                
 
-                if(VMReturnData.CardInField)
+                if(VMReturnData.CardInField && VMReturnData.UID != VMReturnData.EditCardUID)
                 {
                     if (!onetimeread)
                     {
+                        CardinFieldUID = VMReturnData.UID;
                         cardInfoRead.cardDetails.IssuerUID = CardinFieldUID;
                         if (cardInfoRead.ReadIssuer(CardinFieldUID))
                         {
@@ -86,6 +87,7 @@ namespace Mernok_RFID_Licence_Studio
                             if ((char)cardInfoRead.cardDetails.AccessLevel == 'C' || (char)cardInfoRead.cardDetails.AccessLevel == 'Z')
                             {
                                 Accesslevel_good = true;
+                                VMReturnData.IssuerAccess = cardInfoRead.cardDetails.AccessLevel;
                             }
                             else
                             {
@@ -169,7 +171,7 @@ namespace Mernok_RFID_Licence_Studio
                         }
                     }
                 }
-                else if(CardinFieldUID==0)
+                else
                 {
                     ClearDetails();
                     VMReturnData.NextButtonEnabled = false;

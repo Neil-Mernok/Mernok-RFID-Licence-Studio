@@ -51,7 +51,13 @@ namespace USB_PORTS
                                     if (rk6 != null)
                                     {
                                         string currentname = (string)rk6.GetValue("PortName");
-                                        if (ports.Contains(currentname)) comports.Add(currentname);
+
+                                        if (ports.Contains(currentname))
+                                        {  
+                                            comports.Add(currentname);
+                                        }
+                                        
+                                            
                                     }
                                 }
                                 catch(Exception)

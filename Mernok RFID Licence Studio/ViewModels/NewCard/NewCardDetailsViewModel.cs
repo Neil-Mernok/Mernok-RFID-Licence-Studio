@@ -65,19 +65,21 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.CurrentPageNumber = 2;
                 VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
+                VMReturnData.BackButtonEnabled = true;
+                VMReturnData.HelpButtonEnabled = Visibility.Visible;
                 #endregion
 
                 //Only update this viewModel when this view is visible
-                if (VMReturnData.CardInField)
-                {
-                    UID = rFIDCardInfoRead.UIDtoString(VMReturnData.UID);
-                    CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
-                }
-                else
-                {
-                    UID = "Card not in field";
-                    CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
-                }
+                //if (VMReturnData.CardInField)
+                //{
+                //    UID = rFIDCardInfoRead.UIDtoString(VMReturnData.UID);
+                //    CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
+                //}
+                //else
+                //{
+                //    UID = "Card not in field";
+                //    CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
+                //}
 
                 if (VMReturnData.VMCardDetails.IssuerUID == VMReturnData.UID)
                 {
@@ -100,15 +102,27 @@ namespace Mernok_RFID_Licence_Studio
 
                     foreach (RFIDCardInfoRead.AccessLevel_enum item in Enum.GetValues(typeof(RFIDCardInfoRead.AccessLevel_enum)))
                     {
-                        AccessLevelList.Add(item.ToString().Replace("_", " "));
-                        AccessLevelnum = 0;
+                        string Level = item.ToString().Replace("_", " ");
+                        
+
+                        if (((char)VMReturnData.IssuerAccess == 'C') && (Level == "Operator" || Level == "Temporary Operator" || Level == "Trainee Operator"))
+                        {
+                            //AccessLevelList.Where(t => t.Equals("Operator") || t.Equals("Temporary Operator") || t.Equals("Trainee Operator")).ToList();
+                            AccessLevelList.Add(Level);
+                        }
+                        else if ((char)VMReturnData.IssuerAccess == 'Z')
+                        {
+                            AccessLevelList.Add(Level);
+                        }
+
                     }
+                    AccessLevelnum = 0;
 
                     foreach (RFIDCardInfoRead.VehicleAccessType item in Enum.GetValues(typeof(RFIDCardInfoRead.VehicleAccessType)))
                     {
-                        VehicleAccessList.Add(item.ToString().Replace("_", " "));
-                        VehicleAccessType_ret = 0;
+                        VehicleAccessList.Add(item.ToString().Replace("_", " "));                       
                     }
+                    VehicleAccessType_ret = 0;
 
                     ClientCode = mernokClientFile.mernokClientList.Select(l => l.ClientGroupName).Distinct().ToList();
                     ClientCodenum = 0;
@@ -136,6 +150,18 @@ namespace Mernok_RFID_Licence_Studio
                     OperationalArea = VMReturnData.CopiedVMCardDetails.OperationalArea.ToString();
                     TrainDate = VMReturnData.CopiedVMCardDetails.Training_Date;
                     AccessLevelnum = (int)Math.Abs(AccessLevelList.IndexOf( ((RFIDCardInfoRead.AccessLevel_enum)VMReturnData.CopiedVMCardDetails.AccessLevel).ToString().Replace("_", " ")));
+
+                    if((char)VMReturnData.IssuerAccess == 'Z')
+                    {
+                        ClientEdit = true;
+                        AccessEdit = true;
+
+                    }
+                    else if ((char)VMReturnData.IssuerAccess == 'C')
+                    {
+                        ClientEdit = false;
+                    }
+
                     VehicleAccessType_ret = VMReturnData.CopiedVMCardDetails.Options;
                     ExpiryDate = VMReturnData.CopiedVMCardDetails.Expiry_Date;
                     WarningDate = VMReturnData.CopiedVMCardDetails.Warning_Date;
@@ -175,30 +201,34 @@ namespace Mernok_RFID_Licence_Studio
 
         bool Conditioning()
         {
-            bool name, clientgroup, clientsite, OpArea, level, Type, product;
+            bool name, clientgroup, clientsite, OpArea, product;
 
 
             if (OperatorName != null && OperatorName != "")
             {
                 name = true;
-                NameColour = Brushes.White;
+                //NameColour = Brushes.White;
+                NameReq = Visibility.Hidden;
 
             }
             else
             {
                 name = false;
-                NameColour = Brushes.OrangeRed;
+                //NameColour = Brushes.OrangeRed;
+                NameReq = Visibility.Visible;
             }
 
             if(ClientCodenum > 0) 
             {
                 clientgroup = true;
-                ClientColour = Brushes.White;
+                //ClientColour = Brushes.White;
+                groupReq = Visibility.Hidden;
             }
             else
             {
                 clientgroup = false;
-                ClientColour = Brushes.OrangeRed;
+                //ClientColour = Brushes.OrangeRed;
+                groupReq = Visibility.Visible;
             }
 
             if (ClientSite[ClientSitenum] != "None")
@@ -209,54 +239,36 @@ namespace Mernok_RFID_Licence_Studio
             else
             {
                 clientsite = false;
-                ClientSColour = Brushes.OrangeRed;
+                //ClientSColour = Brushes.OrangeRed;
             }
 
             if (OperationalArea != null && OperationalArea != "")
             {
                 OpArea = true;
-                OperColour = Brushes.White;
+                //OperColour = Brushes.White;
+                OpReq = Visibility.Hidden;
             }
             else
             {
                 OpArea = false;
-                OperColour = Brushes.OrangeRed;
-            }
-
-            if (AccessLevelnum > 0)
-            {
-                level = true;
-                AccessColour = Brushes.White;
-            }
-            else
-            {
-                level = false;
-                AccessColour = Brushes.OrangeRed;
-            }
-
-            if (VehicleAccessType_ret > 0)
-            {
-                Type = true;
-                VehicleAccessColour = Brushes.White;
-            }
-            else
-            {
-                Type = false;
-                VehicleAccessColour = Brushes.OrangeRed;
+                //OperColour = Brushes.OrangeRed;
+                OpReq = Visibility.Visible;
             }
 
             if (ProductList_ret > 0)
             {
                 product = true;
-                ProductColour = Brushes.White;
+                //ProductColour = Brushes.White;
+                ProductReq = Visibility.Hidden;
             }
             else
             {
                 product = false;
-                ProductColour = Brushes.OrangeRed;
+                //ProductColour = Brushes.OrangeRed;
+                ProductReq = Visibility.Visible;
             }
 
-            if (name && clientsite && clientgroup && OpArea && Type && level && product)
+            if (name && clientsite && clientgroup && OpArea && product)
                 return true;
             else
                 return false;
@@ -264,6 +276,60 @@ namespace Mernok_RFID_Licence_Studio
         }
 
         #region Binding properties
+
+        #region VisibilityProps
+        private Visibility _NameReq;
+
+        public Visibility NameReq
+        {
+            get { return _NameReq; }
+            set { _NameReq = value; RaisePropertyChanged("NameReq"); }
+        }
+        private Visibility _groupReq;
+
+        public Visibility groupReq
+        {
+            get { return _groupReq; }
+            set { _groupReq = value; RaisePropertyChanged("groupReq"); }
+        }
+        private Visibility _OpReq;
+
+        public Visibility OpReq
+        {
+            get { return _OpReq; }
+            set { _OpReq = value; RaisePropertyChanged("OpReq"); }
+        }
+
+        private Visibility _ProductReq;
+
+        public Visibility ProductReq
+        {
+            get { return _ProductReq; }
+            set { _ProductReq = value; RaisePropertyChanged("ProductReq"); }
+        }
+
+
+
+        #endregion
+
+
+        private bool _AccessEdit;
+
+        public bool AccessEdit
+        {
+            get { return _AccessEdit; }
+            set { _AccessEdit = value; RaisePropertyChanged("AccessEdit"); }
+        }
+
+        private bool _ClientEdit;
+
+        public bool ClientEdit
+        {
+            get { return _ClientEdit; }
+            set { _ClientEdit = value; RaisePropertyChanged("ClientEdit"); }
+        }
+
+
 
         private string _operatorName;
 

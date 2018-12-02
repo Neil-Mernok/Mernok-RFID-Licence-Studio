@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using USB_PORTS;
 
 namespace Mernok_RFID_Licence_Studio
 {
@@ -17,6 +18,7 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool BackbtnPressed = false;
         private bool NextbtnPressed = false;
+        //static string VID = "0403", PID = "7E40";
 
         public MainViewModel(Window window) : base(window)
         {
@@ -33,6 +35,21 @@ namespace Mernok_RFID_Licence_Studio
 
         public override void Update(ViewModelReturnData VMReturnData)
         {
+            //List<string> ports = PortFromVIDPID.ComPortNames(VID, PID);
+            //if(ports.Count != VMReturnData.NumberofRWD)
+            //{
+            //    if (RFID.MernokRFID.OpenRFID(RFID.Mode.Mifare))
+            //    {
+            //        VMReturnData.RWD_connected = true;
+            //    }
+            //    else
+            //    {
+            //        VMReturnData.RWD_connected = false;
+            //    }
+            //    VMReturnData.NumberofRWD = ports.Count;
+            //}
+
+            
 
             if (!RFID.MernokRFID.IsOpen())
             {
@@ -57,7 +74,7 @@ namespace Mernok_RFID_Licence_Studio
                     VMReturnData.CardInField = false;
                 }
 
-                if (VMReturnData.EditCard && VMReturnData.CopiedVMCardDetails.cardUID != VMReturnData.UID && VMReturnData.NewCardWindow>=1)
+                if (VMReturnData.EditCard && VMReturnData.EditCardUID != VMReturnData.UID && VMReturnData.NewCardWindow>=1)
                 {
                     VMReturnData.EditCardWarn_Active = true;
                 }
@@ -72,13 +89,10 @@ namespace Mernok_RFID_Licence_Studio
             if (VMReturnData.LicenceView_Active)
             {
                 VMReturnData.NavigationBar_Active = true;
-                VMReturnData.NextButtonEnabled = false;
-                VMReturnData.BackButtonEnabled = false;
             }
             else if(VMReturnData.NewCardAccess_Active)
             {
                 VMReturnData.NavigationBar_Active = true;
-                VMReturnData.BackButtonEnabled = true;
             }
             else
             {

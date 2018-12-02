@@ -66,13 +66,54 @@ namespace RFID
                 return false;               // no ports with the details specified, so fail
             else
             {
-                foreach (string s in ports)
+                #region previous code
+                //    foreach (string s in ports)
+                //    {
+                //        try
+                //        {
+                //            if (SP.IsOpen) SP.Close();
+
+                //            SP.PortName = s;
+                //            if (SP.IsOpen != true)
+                //            {
+                //                SP.Open();
+                //                Thread.Sleep(10);
+                //                if (SP.IsOpen)
+                //                {
+                //                    if (MernokRFID_interface.Mifair_ICode_Mode(RFID_Mode))
+                //                    {
+                //                        byte[] retdata;
+                //                        byte[] command = new byte[] { 80, 0, 0 };                       //Send polling interval to 0: P', 0, 0                                                     // Tag answer OK
+                //                        if (MernokRFID.SendRec(out retdata, command))
+                //                            return true;
+                //                    }
+
+                //                    SP.Close();
+                //                    return false;
+                //                }
+                //                else
+                //                {
+                //                    return false;
+                //                }
+                //            }
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            //                       MessageBox.Show("Failed To Open Comms with RWD module");
+                //            Console.WriteLine(ex.HelpLink);
+                //            //                        return false;
+                //        }
+                //    }
+                //}
+                #endregion
+
+                for (int i = ports.Count; i > 0; i--)
                 {
                     try
                     {
                         if (SP.IsOpen) SP.Close();
 
-                        SP.PortName = s;
+                        SP.PortName = ports[i-1];
                         if (SP.IsOpen != true)
                         {
                             SP.Open();
@@ -91,20 +132,21 @@ namespace RFID
                                 return false;
                             }
                             else
-                            {                              
+                            {
                                 return false;
-                            }         
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         //                       MessageBox.Show("Failed To Open Comms with RWD module");
                         Console.WriteLine(ex.HelpLink);
-                        return false;
+                        //                        return false;
                     }
                 }
             }
-            return false;
+
+                return false;
         }
 
         public static void CloseRFID()

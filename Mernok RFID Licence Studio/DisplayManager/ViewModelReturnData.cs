@@ -14,24 +14,29 @@ namespace Mernok_RFID_Licence_Studio
     {
         //Operation 
         public uint UID = 0;
+        public uint IssuerAccess = 0;
         public uint prevUID = 0;
+        public uint EditCardUID = 0;
         public uint IssuerUID = 0;
         public uint NewCardUID = 0;
-
+        public int NumberofRWD = 0;
+        public bool cardChanged = false;
         public bool RWD_connected = false;
  //       public bool CardInField = false;
-
         private bool _CardInField;
-
         public bool CardInField
         {
             get { return _CardInField; }
             set { _CardInField = value; }
         }
-
         public bool CardRead_Done = false;
-
         public int NewCardWindow = 0;
+        public bool EditCard = false;
+        public bool IssuerCardTime = false;
+        public CardDetails VMCardDetails = new CardDetails();
+        public CardDetails CopiedVMCardDetails = new CardDetails();
+        public RFIDCardInfoWrite CardInfoWrite = new RFIDCardInfoWrite();
+        public RFIDCardInfoRead cardInfoRead = new RFIDCardInfoRead();
 
         //Navigation bar details
         public string ViewTitle;
@@ -41,23 +46,22 @@ namespace Mernok_RFID_Licence_Studio
         public int CurrentPageNumber;
         public int TotalPageNumber;
         public int NavBarProgress;
+        public bool NavigationBar_Active = false;
+        public bool NextButton_pressed = false;
+        public bool BackButton_pressed = false;
+        public bool MenuButton_pressed = false;
+        public bool BackArrow_pressed = false;
+        public bool NextButtonEnabled = false;
+        public bool BackButtonEnabled = false;
+        public Visibility MenuButtonEnabled = Visibility.Collapsed;
+        public Visibility HelpButtonEnabled = Visibility.Collapsed;
 
-        public bool CardFormatError = false;
+        public Visibility MenuEditBtnEnabled = Visibility.Collapsed;
+        public Visibility MenuIssueBtnEnabled = Visibility.Collapsed;
+
+        //main windows       
         public bool StartUpView_Active = false;
         public bool LicenceView_Active = false;
-        public bool ExitPromtView_Active = false;
-        public bool MenuView_Active = false;
-        public bool CardProgramFail = false;
-        public bool CardStillIssuer_Active = false;
-        public bool AboutWindow_Active = false;
-        public bool EditCardWarn_Active = false;
-
-
-        public bool CardStillIssuer = false;
-
-
-        public bool LicenceComplete = false;
-
         public bool NewCardAccess_Active = false;
         public bool NewCardIssuer_Active = false;
         public bool NewCardDetail_Active = false;
@@ -65,35 +69,31 @@ namespace Mernok_RFID_Licence_Studio
         public bool NewCardVNames_Active = false;
         public bool NewCardType_Active = false;
         public bool NewCardGroup_Active = false;
+
+        //alternate functions
+        public bool ExitPromtView_Active = false;
+        public bool MenuView_Active = false;
+
+        //descriptive windows
+        public bool AboutWindow_Active = false;
+        public bool HelpWindow_Active = false;
+        public string HelpMessage = "";
+        
+
+        //warnings
+        public bool CardStillIssuer = false;
+        public bool CardFormatError = false;
+        public bool LicenceComplete = false;
+        public bool CardProgramFail = false;
+        public bool CardStillIssuer_Active = false;
+        public bool EditCardWarn_Active = false;
+
+        //messages
         public bool CardProramed_done = false;
 
-        public bool NavigationBar_Active = false;
-        public bool NextButton_pressed = false;
-        public bool BackButton_pressed = false;
-
-        public bool MenuButton_pressed = false;
-        public bool BackArrow_pressed = false;
 
 
-        public bool NextButtonEnabled = false;
-        public bool BackButtonEnabled = false;
-        public Visibility MenuButtonEnabled = Visibility.Collapsed;
-
-        public Visibility MenuEditBtnEnabled = Visibility.Collapsed;
-        public Visibility MenuIssueBtnEnabled = Visibility.Collapsed;
-
-
-        public bool EditCard = false;
-        public bool IssuerCardTime = false;
-
-        public CardDetails VMCardDetails = new CardDetails();
-
-        public CardDetails CopiedVMCardDetails = new CardDetails();
-
-        public RFIDCardInfoWrite CardInfoWrite = new RFIDCardInfoWrite();
-
-        public RFIDCardInfoRead cardInfoRead = new RFIDCardInfoRead();
-
+        //global button events
         public void NextWindow()
         {
             NewCardWindow++;
@@ -156,6 +156,7 @@ namespace Mernok_RFID_Licence_Studio
             if(NewCardWindow==0)
             {
                 NewCardAccess_Active = NewCardIssuer_Active = false;
+                EditCard = false;
             }
             if (NewCardWindow==1)
             {
@@ -176,6 +177,7 @@ namespace Mernok_RFID_Licence_Studio
             if(LicenceView_Active)
             {
                 EditCard = true;
+                EditCardUID = cardInfoRead.cardDetails.cardUID;
                 CopiedVMCardDetails = cardInfoRead.cardDetails;
                 LicenceView_Active = false;
                 NewCardAccess_Active = true;
@@ -217,11 +219,60 @@ namespace Mernok_RFID_Licence_Studio
         {
             VMCardDetails = new CardDetails();
             CardRead_Done = false;
+            NavigationBar_Active = false;
             NewCardAccess_Active = LicenceView_Active = NewCardDetail_Active = NewCardVID_Active = NewCardVNames_Active = NewCardGroup_Active = NewCardType_Active = NewCardIssuer_Active = false;
             EditCard = false;
             NewCardWindow = 0;
         }
 
+        public void HelpButton()
+        {
+            HelpWindow_Active = true;
+            if(NewCardAccess_Active)
+            {
+                HelpMessage = "This window requires a valid Issuer card to continue. A valid Issuer card requires:" +
+                    " \n 1. The card Expiry date to be one day in the future from today" +
+                    " \n 2. The card Access level to be either a Training Officer or a Mernok Engineer" +
+                    " \n 3. A Training Officer is only allowed to edit Operator, Trainee Operator, and Temporary Operator cards." +
+                    "\n \n If you do not have such a card, you can request an Issuer card from the options menu at the begining of the application.";
+            }
+
+            if (NewCardWindow == 1)
+            {
+                HelpMessage = "This window requires a valid Issuer card to continue. A valid Issuer card requires:" +
+                     " \n 1. The card Expiry date to be one day in the future from today" +
+                     " \n 2. The card Access level to be either a Training Officer or a Mernok Engineer" +
+                     " \n 3. A Training Officer is only allowed to edit Operator, Trainee Operator, and Temporary Operator cards." +
+                     "\n \n If you do not have such a card, you can request an Issuer card from the options menu at the begining of the application.";
+            }
+            if (NewCardWindow == 2)
+            {
+                switch (VMCardDetails.Options)
+                {
+                    case 1:
+                        //NewCardVID_Active = true;
+                        break;
+
+                    case 0:
+                        //NewCardType_Active = true;
+                        break;
+                    case 2:
+                        //NewCardVNames_Active = true;
+                        break;
+
+                    case 3:
+                        //NewCardGroup_Active = true;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            if (NewCardWindow == 3)
+            {
+
+            }
+        }
         #region General Functions
         public string StringConditioner(string value)
         {

@@ -45,6 +45,7 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.CurrentPageNumber = 3;
                 VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
+                VMReturnData.HelpButtonEnabled = Visibility.Visible;
                 #endregion
 
                 if (!OneTimeRead)

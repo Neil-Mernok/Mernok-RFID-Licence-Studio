@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mernok_RFID_Licence_Studio"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1140" Background="#02000000" >
+             d:DesignHeight="800" d:DesignWidth="1140" Background="#02000000" >
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,7 +17,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Height="300" Width="500" Background="Crimson">
+    
+    <Grid  Background="Crimson">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
@@ -29,24 +30,39 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
 <!--Row1-->
-        <Label Content="MENU" FontSize="40" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center"/>
-        
-<!--Row2-->
-        <Button Content="Edit card"  Command="{Binding EditCardBtn}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" Width="220" FontSize="30" Visibility="{Binding EditCardVis}"/>
-        
-<!--Row3-->
-        <Button Content="Issuer Card"  Command="{Binding IssuerCardBtn}" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" Width="220" FontSize="30" Visibility="{Binding IssueCardVis}"/>
-
-<!--Row4-->
-        <Button Command="{Binding Exitbtn}" BorderThickness="2" Background="Transparent" Grid.Row="1" Grid.Column="0" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+        <Label Content="MENU" FontSize="80" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center"/>
+        <Button Command="{Binding Exitbtn}" BorderThickness="2" Background="Transparent" Grid.Row="1" Grid.Column="0" MaxHeight="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Mernok RFID Licence Studio;component/Resources/Images/Buttons/Exit.png" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
             </StackPanel>
         </Button>
+
+        <!--Row2-->
+        <Button Content="About Application"  Command="{Binding AboutBtn}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70"  FontSize="30" />
+        
+<!--Row3-->
+        <Button Content="Select different RWD"  Command="{Binding RWDselectBtn}" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+
+<!--Row4-->
+        <Button Content="Request new Issuer Card"  Command="{Binding IssuerCardBtn}" Grid.Row="4" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+
+        <!--Row5-->
+        <Button Content="Create new Issuer Card from file"  Command="{Binding IssuerFileCardBtn}" Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+
+        <!--Row5-->
+        <Button Content="Format Card"  Command="{Binding FormatCardBtn}" Grid.Row="6" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+
+        <!--Row5-->
+        <Button Content="Hot Flag Card"  Command="{Binding HotFlagCardBtn}" Grid.Row="7" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+
 
 
 

@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\SplashViews\EditCardWarningViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\ExitPromptViewModel.cs" />
     <Compile Include="ViewModels\LicenceViewModel.cs" />
+    <Compile Include="ViewModels\SplashViews\HelpViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\IssuerCardPrompViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\MenuViewModel.cs" />
     <Compile Include="ViewModels\NewCard\NewCardAccessViewModel.cs" />
@@ -170,6 +171,9 @@
     <Compile Include="Infrastructure\ViewModel.cs" />
     <Compile Include="Infrastructure\ViewModelExample.cs" />
     <Compile Include="ViewModels\StartupViewModel.cs" />
+    <Compile Include="Views\SplashView\HelpView.xaml.cs">
+      <DependentUpon>HelpView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SplashView\IssuerCardPrompView.xaml.cs">
       <DependentUpon>IssuerCardPrompView.xaml</DependentUpon>
     </Compile>
@@ -241,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashView\HelpView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -433,6 +441,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Buttons\About.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Buttons\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Buttons\Edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

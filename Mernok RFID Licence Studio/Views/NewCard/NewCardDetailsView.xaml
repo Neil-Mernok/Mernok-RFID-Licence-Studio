@@ -9,6 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.9*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -28,61 +29,79 @@
         </Grid.RowDefinitions>
 
         <!--Row 0-->
-        <Grid Grid.Row="1"  Grid.RowSpan="5">
+        <!--<Grid Grid.Row="1"  Grid.RowSpan="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Source="{Binding CardImage}" MaxHeight="100" Margin="50,10,0,0"/>
             <Label Content="{Binding UID}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-        </Grid>
+        </Grid>-->
         <!--Row 2-->
-        <Label Content="Fill in card Details:" FontSize="45" Grid.Row="2" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="5"/>
+        <Label Content="Fill in card Details:" FontSize="45" Grid.Row="2" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="5"/>
         <!--Row 3-->
         <Label Content="Operator Name:" HorizontalContentAlignment="Right" Grid.Row="3" Grid.Column="0" FontSize="25" Margin="2"/>
-        <TextBox Text="{Binding OperatorName, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5" FontSize="25" Width="380" TextChanged="TextBox_TextChanged" Background="{Binding NameColour,Mode=TwoWay}"/>
+        <TextBox Text="{Binding OperatorName, Mode=TwoWay}" Grid.Row="3" Grid.Column="1"  Margin="5" FontSize="25"  TextChanged="TextBox_TextChanged" />
+        <Label Content="*Required (Space, A-Z, 0-9, underscore allowed)" Grid.Row="3" Grid.Column="4" FontSize="15" VerticalAlignment="Center" Foreground="Red" Visibility="{Binding NameReq}" />
 
 
         <!--Row 4-->
         <Label Content="Client Group:" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="0" FontSize="25" Margin="2"/>
         <!--<TextBox Text="{Binding ClientCode, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"   FontSize="25" Margin="5" Width="380"/>-->
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientCode}" 
-                   SelectedIndex="{Binding ClientCodenum}" SelectionChanged="ComboBox_SelectionChanged"
-                   BorderBrush="Red" BorderThickness="2"/>
+        <ComboBox   Grid.Row="4" Grid.Column="1" FontSize="25" Margin="5" ItemsSource="{Binding ClientCode}" 
+                   SelectedIndex="{Binding ClientCodenum}" SelectionChanged="ComboBox_SelectionChanged" IsEnabled="{Binding ClientEdit}"
+                   />
+        <Label Content="*Required (Can not be ''None'')" Grid.Row="4" Grid.Column="4" FontSize="15" VerticalAlignment="Center" Foreground="Red" Visibility="{Binding groupReq}"/>
 
 
         <!--Row 5-->
         <Label Content="Client site:" HorizontalContentAlignment="Right" Grid.Row="5" Grid.Column="0" FontSize="25" Margin="2"/>
         <!--<TextBox Text="{Binding ClientSite, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"   FontSize="25" Margin="5" Width="380"/>-->
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding ClientSite}" SelectedIndex="{Binding ClientSitenum}" 
-                   SelectionChanged="ComboBox_SelectionChanged"
-                   Background="{Binding ClientSColour,Mode=TwoWay}"/>
+        <ComboBox   Grid.Row="5" Grid.Column="1" FontSize="25" Margin="5" ItemsSource="{Binding ClientSite}" SelectedIndex="{Binding ClientSitenum}" 
+                   SelectionChanged="ComboBox_SelectionChanged" IsEnabled="{Binding ClientEdit}"
+                  />
+        <Label Content="*Required (Can not be ''None'')" Grid.Row="5" Grid.Column="4" FontSize="15" VerticalAlignment="Center" Foreground="Red" Visibility="{Binding groupReq}"/>
         <!--Row 6-->
         <Label Content="Operational Area:" HorizontalContentAlignment="Right" Grid.Row="6" Grid.Column="0" FontSize="25" Margin="2"/>
-        <TextBox Text="{Binding OperationalArea, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" FontSize="25" Margin="5" Width="380" TextChanged="TextBox_TextChanged" Background="{Binding OperColour,Mode=TwoWay}"/>
+        <TextBox Text="{Binding OperationalArea, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" FontSize="25" Margin="5"  TextChanged="TextBox_TextChanged" IsEnabled="{Binding OpareaEnabled}"/>
+        <Label Content="*Required (0-9 allowed, min:1, max: 65535)" Grid.Row="6" Grid.Column="4" FontSize="15" VerticalAlignment="Center" Foreground="Red" Visibility="{Binding OpReq}"/>
 
         <!--Row 7-->
         <Label Content="Access Level:" HorizontalContentAlignment="Right" Grid.Row="7" Grid.Column="0" FontSize="25" Margin="2"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" FontSize="25" Margin="5" Width="380" ItemsSource="{Binding AccessLevelList}" 
-                   SelectedIndex="{Binding AccessLevelnum}" SelectionChanged="ComboBox_SelectionChanged" Background="{Binding AccessColour,Mode=TwoWay}">
+        <ComboBox  Grid.Row="7" Grid.Column="1" FontSize="25" Margin="5"  ItemsSource="{Binding AccessLevelList}" 
+                   SelectedIndex="{Binding AccessLevelnum}" 
+                   >
         </ComboBox>
+        <Button Command="{Binding AccesstypeHelpbtn}" BorderThickness="0" Background="Transparent" Grid.Row="7" HorizontalAlignment="Left" Grid.Column="4" MaxHeight="38">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/Images/Buttons/About.png" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
+                <!--<TextBlock Text="{Binding , UpdateSourceTrigger=PropertyChanged}" Margin="3,51,10,0" Grid.Row="1" Grid.Column="2"  Foreground="black" HorizontalAlignment="Right"/>-->
+            </StackPanel>
+        </Button>
 
         <!--Row 8-->
         <Label Content="Vehicle Access Type:" HorizontalContentAlignment="Right" Grid.Row="8" Grid.Column="0" FontSize="25" Margin="5"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding VehicleAccessList}" 
+        <ComboBox   Grid.Row="8" Grid.Column="1" FontSize="25"  ItemsSource="{Binding VehicleAccessList}" 
                    SelectedIndex="{Binding VehicleAccessType_ret}"  Margin="5" SelectionChanged="ComboBox_SelectionChanged"
-                   Background="{Binding VehicleAccessColour,Mode=TwoWay}">
+                  >
         </ComboBox>
+        <Button Command="{Binding AccesstypeHelpbtn}" BorderThickness="0" Background="Transparent" Grid.Row="8" HorizontalAlignment="Left" Grid.Column="4" MaxHeight="38">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/Images/Buttons/About.png" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
+                <!--<TextBlock Text="{Binding , UpdateSourceTrigger=PropertyChanged}" Margin="3,51,10,0" Grid.Row="1" Grid.Column="2"  Foreground="black" HorizontalAlignment="Right"/>-->
+            </StackPanel>
+        </Button>
         
         <!--Row 9-->
         <Label Content="Product Code:"   FontSize="25" Grid.Row="9" HorizontalAlignment="Right"/>
-        <ComboBox  HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" FontSize="25" Width="380" ItemsSource="{Binding ProductCode}" 
+        <ComboBox  Grid.Row="9" Grid.Column="1" FontSize="25" ItemsSource="{Binding ProductCode}" 
                    SelectedIndex="{Binding ProductList_ret}"  Margin="5" SelectionChanged="ComboBox_SelectionChanged"
-                   BorderBrush="{Binding ProductColour,Mode=TwoWay}" BorderThickness="2">
+                   >
         </ComboBox>
+        <Label Content="*Required (Can not be ''None'')" Grid.Row="9" Grid.Column="4" FontSize="15" VerticalAlignment="Center" Foreground="Red" Visibility="{Binding ProductReq}"/>
         
         <!--Row 10-->
-        <Grid Grid.Row="10" Grid.ColumnSpan="2">
+        <Grid Grid.Row="10" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>

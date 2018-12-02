@@ -25,11 +25,11 @@ namespace Mernok_RFID_Licence_Studio
         public ICommand ReadCardInfobtn { get; private set; }
         public ICommand NewCardInfobtn { get; private set; }
         public ICommand Exitbtn { get; private set; }
-        public ICommand Aboutbtn { get; private set; }
+        public ICommand Optionsbtn { get; private set; }
 
         private bool ReadCardPressed = false;
         private bool NewCardPressed = false;
-        private bool AboutPressed = false;
+        private bool OptionsPressed = false;
         private bool formated;
         private bool oneRead = false;
 
@@ -45,12 +45,12 @@ namespace Mernok_RFID_Licence_Studio
             ReadCardInfobtn = new DelegateCommand(ReadCardInfoHandler);
             NewCardInfobtn = new DelegateCommand(NewCardInfoHandler);
             Exitbtn = new DelegateCommand(ExitBtnHandler);
-            Aboutbtn = new DelegateCommand(AboutbtnHandler);
+            Optionsbtn = new DelegateCommand(OptionsbtnHandler);
             #endregion
 
             #region Progressbar init
             ProgressBarTimer.Tick += new EventHandler(ProgressBarTimer_Tick);
-            ProgressBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            ProgressBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             ReadProgress = default_max;
             #endregion
 
@@ -82,13 +82,37 @@ namespace Mernok_RFID_Licence_Studio
                 CardPresent = formated & VMReturnData.CardInField;
                 if (VMReturnData.CardInField)
                 {
-                    UID = RFIDCardInfoRead.UIDtoString(VMReturnData.UID);
-                    if(!oneRead)
+
+                    if (VMReturnData.prevUID == 0)
                     {
-                        RFIDCardInfoRead.UID = VMReturnData.UID;
-                        formated = RFIDCardInfoRead.Block1Info();
-                        oneRead = true;
+                        VMReturnData.prevUID = VMReturnData.UID;
                     }
+                    else if (VMReturnData.prevUID != VMReturnData.UID)
+                    {
+                        VMReturnData.cardChanged = true;
+                        oneRead = false;
+                        VMReturnData.prevUID = VMReturnData.UID;
+                    }
+
+                    if (VMReturnData.cardChanged && VMReturnData.LicenceView_Active && VMReturnData.EditCard != true)
+                    {
+                        VMReturnData.BackApp();                     
+                        VMReturnData.cardChanged = false;
+                    }
+                    else if(VMReturnData.NewCardWindow < 1 && formated && !VMReturnData.NewCardAccess_Active)
+                    {
+                        VMReturnData.cardChanged = false;
+                        if(!oneRead)
+                        {
+                            ReadCardInfoHandler();
+                            oneRead = true;
+                        }
+                        
+                    }
+
+                    UID = RFIDCardInfoRead.UIDtoString(VMReturnData.UID);
+                    RFIDCardInfoRead.UID = VMReturnData.UID;
+                    formated = RFIDCardInfoRead.Block1Info();
                                       
                     if (formated)
                         CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
@@ -114,10 +138,10 @@ namespace Mernok_RFID_Licence_Studio
                     ProgressBarTimer.Stop();
                 }
 
-                if (AboutPressed)
+                if (OptionsPressed)
                 {
-                    AboutPressed = false;
-                    VMReturnData.AboutWindow_Active = true;
+                    OptionsPressed = false;
+                    VMReturnData.MenuView_Active = true;
                 }
 
                 if (NewCardPressed == true)
@@ -176,9 +200,9 @@ namespace Mernok_RFID_Licence_Studio
             _buttonExitPressed = true;
         }
 
-        private void AboutbtnHandler()
+        private void OptionsbtnHandler()
         {
-            AboutPressed = true;
+            OptionsPressed = true;
         }
         #endregion
 

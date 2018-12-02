@@ -51,9 +51,9 @@ namespace Mernok_RFID_Licence_Studio
             TagTypesL.MernokAssetGroups = TagTypesL.MernokAssetGroups.OrderBy(t => t.GroupNumber).ToList();
             #endregion
 
-            Console.WriteLine();
-            //  <-- Keep this information secure! -->
-            Console.WriteLine("MachineName: {0}", Environment.MachineName);
+            //Console.WriteLine();
+            ////  <-- Keep this information secure! -->
+            //Console.WriteLine("MachineName: {0}", Environment.MachineName);
 
             //Start main 
             SystemVMReturnData = new ViewModelReturnData();
@@ -107,7 +107,8 @@ namespace Mernok_RFID_Licence_Studio
                 { window.CardProgramFail.Name, new CardProgramFailViewModel(window.CardProgramFail) },
                 { window.IssuerCardPrompView.Name, new IssuerCardPrompViewModel(window.IssuerCardPrompView) },
                 { window.AboutView.Name, new AboutViewModel(window.AboutView) },
-                {window.EditCardWarningView.Name, new EditCardWarningViewModel(window.EditCardWarningView) }
+                {window.EditCardWarningView.Name, new EditCardWarningViewModel(window.EditCardWarningView) },
+                { window.HelpView.Name, new HelpViewModel(window.HelpView) }
             };
 
             ViewsLoaded = true;

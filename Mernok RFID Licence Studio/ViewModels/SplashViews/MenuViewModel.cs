@@ -13,13 +13,13 @@ namespace Mernok_RFID_Licence_Studio
     {
         private MenuView _viewInstance;
 
-        public ICommand EditCardBtn { get; private set; }
+        public ICommand AboutBtn { get; private set; }
 
         public ICommand IssuerCardBtn { get; private set; }
 
         public ICommand Exitbtn { get; private set; }
 
-        private bool EditCardBtnPressed = false;
+        private bool AboutBtnPressed = false;
 
         private bool IssuerCardBtnPressed = false;
 
@@ -28,16 +28,16 @@ namespace Mernok_RFID_Licence_Studio
 
         public MenuViewModel(UserControl control) : base(control)
         {
-            EditCardBtn = new DelegateCommand(EditCardBtnHandler);
+            AboutBtn = new DelegateCommand(AboutBtnHandler);
             IssuerCardBtn = new DelegateCommand(IssuerCardBtnHandler);
             Exitbtn = new DelegateCommand(ExitBtnHandler);
             control.DataContext = this;
             _viewInstance = (MenuView)control;
         }
 
-        public void EditCardBtnHandler()
+        public void AboutBtnHandler()
         {
-            EditCardBtnPressed = true;
+            AboutBtnPressed = true;
         }
 
         public void IssuerCardBtnHandler()
@@ -62,11 +62,10 @@ namespace Mernok_RFID_Licence_Studio
                 IssueCardVis = VMReturnData.MenuIssueBtnEnabled;
 
 
-                if (EditCardBtnPressed)
+                if (AboutBtnPressed)
                 {
-                    EditCardBtnPressed = false;
-                    VMReturnData.MenuButton();
-                    VMReturnData.MenuView_Active = false;
+                    AboutBtnPressed = false;
+                    VMReturnData.AboutWindow_Active = true;
 
                 }
 

@@ -55,7 +55,14 @@
         <!--<Button Content="Next" HorizontalAlignment="Left" Style="{StaticResource Button_Style}" Margin="170,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="76" Grid.Column="2" Height="46" Command="{Binding ButtonNextPage}"/>-->
         <Button Grid.Column="4"  Command="{Binding ButtonRuleMenu}" BorderThickness="0" Background="Transparent" Grid.Row="0"  Grid.RowSpan="2" Visibility="{Binding MenuVisable}">
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Resources/Images/Buttons/Menu.png" Margin="15" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image Source="/Resources/Images/Buttons/Edit.png" Margin="5" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
+                <!--<TextBlock Text="{Binding , UpdateSourceTrigger=PropertyChanged}" Margin="3,51,10,0" Grid.Row="1" Grid.Column="2"  Foreground="black" HorizontalAlignment="Right"/>-->
+            </StackPanel>
+        </Button>
+
+        <Button Command="{Binding ButtonHelp}" BorderThickness="0" Background="Transparent" Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"  Visibility="{Binding HelpVisable}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/Images/Buttons/About.png" Margin="8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"/>
                 <!--<TextBlock Text="{Binding , UpdateSourceTrigger=PropertyChanged}" Margin="3,51,10,0" Grid.Row="1" Grid.Column="2"  Foreground="black" HorizontalAlignment="Right"/>-->
             </StackPanel>
         </Button>

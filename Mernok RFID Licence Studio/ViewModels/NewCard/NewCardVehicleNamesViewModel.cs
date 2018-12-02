@@ -39,6 +39,8 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.SubTitle = "Vehicle Name details";
                 VMReturnData.CurrentPageNumber = 3;
                 VMReturnData.TotalPageNumber = 4;
+                VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
+                VMReturnData.HelpButtonEnabled = Visibility.Visible;
                 //Only update this viewModel when this view is visible
                 #endregion
 
