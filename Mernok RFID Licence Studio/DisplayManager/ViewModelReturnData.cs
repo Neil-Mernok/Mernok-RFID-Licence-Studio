@@ -22,6 +22,7 @@ namespace Mernok_RFID_Licence_Studio
         public int NumberofRWD = 0;
         public bool cardChanged = false;
         public bool RWD_connected = false;
+        public bool OptionsPressed = false;
  //       public bool CardInField = false;
         private bool _CardInField;
         public bool CardInField

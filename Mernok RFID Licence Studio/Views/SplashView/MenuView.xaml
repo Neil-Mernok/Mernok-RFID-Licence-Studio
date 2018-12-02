@@ -58,10 +58,10 @@
         <Button Content="Create new Issuer Card from file"  Command="{Binding IssuerFileCardBtn}" Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
 
         <!--Row5-->
-        <Button Content="Format Card"  Command="{Binding FormatCardBtn}" Grid.Row="6" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <Button Content="Format Card"  Command="{Binding Formatbtn}" Grid.Row="6" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
 
         <!--Row5-->
-        <Button Content="Hot Flag Card"  Command="{Binding HotFlagCardBtn}" Grid.Row="7" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <Button Content="Hot Flag Card"  Command="{Binding HotFlag}" Grid.Row="7" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
 
 
 

@@ -157,6 +157,18 @@ namespace Mernok_RFID_Licence_Studio
                     IssuerUID = VMReturnData.cardInfoRead.UIDtoString(VMReturnData.cardInfoRead.cardDetails.IssuerUID);
                     EngineerName = VMReturnData.cardInfoRead.cardDetails.EngineerName;
                     EngineerUID = VMReturnData.cardInfoRead.UIDtoString(VMReturnData.cardInfoRead.cardDetails.EngineerUID);
+                    HotFlag = VMReturnData.cardInfoRead.cardDetails.Hotflaged_status;
+                    if(HotFlag)
+                    {
+                        HotFlagDate = VMReturnData.cardInfoRead.cardDetails.HotFlagedDate.ToShortDateString();
+                        HotFlagUID = VMReturnData.cardInfoRead.cardDetails.HotFlagedVID.ToString();
+                    }
+                    else
+                    {
+                        HotFlagDate = "";
+                        HotFlagUID = "";
+                    }
+                    
                     //ClientCode = ((ClientSite)VMReturnData.cardInfoRead.cardDetails.Client_Site + " " + VMReturnData.cardInfoRead.cardDetails.OperationalArea).Replace("_", " ");
                     ClientCode = mernokClientFile.mernokClientList.Where(t => t.Client == VMReturnData.cardInfoRead.cardDetails.Client_Site).First().ClientSiteName +" "+ VMReturnData.cardInfoRead.cardDetails.OperationalArea;
 

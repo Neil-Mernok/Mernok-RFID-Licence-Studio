@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RFID;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,13 @@ namespace Mernok_RFID_Licence_Studio
 
         public ICommand AboutBtn { get; private set; }
 
+        public ICommand HotFlag { get; private set; }
+
         public ICommand IssuerCardBtn { get; private set; }
 
         public ICommand Exitbtn { get; private set; }
+
+        public ICommand Formatbtn { get; private set; }
 
         private bool AboutBtnPressed = false;
 
@@ -25,14 +30,30 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool _buttonExitPressed = false;
 
+        private bool _HotflagBtnPressed = false;
+
+        private bool _FormatbtnPressed = false;
+
 
         public MenuViewModel(UserControl control) : base(control)
         {
             AboutBtn = new DelegateCommand(AboutBtnHandler);
             IssuerCardBtn = new DelegateCommand(IssuerCardBtnHandler);
             Exitbtn = new DelegateCommand(ExitBtnHandler);
+            HotFlag = new DelegateCommand(HotFlagBtnHandler);
+            Formatbtn = new DelegateCommand(Formatbtnhandler);
             control.DataContext = this;
             _viewInstance = (MenuView)control;
+        }
+
+        private void Formatbtnhandler()
+        {
+            _FormatbtnPressed = true;
+        }
+
+        private void HotFlagBtnHandler()
+        {
+            _HotflagBtnPressed = true;
         }
 
         public void AboutBtnHandler()
@@ -56,6 +77,7 @@ namespace Mernok_RFID_Licence_Studio
 
             if (VMReturnData.MenuView_Active)
             {
+                VMReturnData.OptionsPressed = true;
                 this.View.Visibility = Visibility.Visible;
                 VMReturnData.NavigationBar_Active = false;
                 EditCardVis = VMReturnData.MenuEditBtnEnabled;
@@ -67,6 +89,51 @@ namespace Mernok_RFID_Licence_Studio
                     AboutBtnPressed = false;
                     VMReturnData.AboutWindow_Active = true;
 
+                }
+
+                if(_HotflagBtnPressed)
+                {
+                    CardDetails WriteCardDetails = new CardDetails() { Hotflaged_status = true, HotFlagedDate = DateTime.Now, HotFlagedVID = 123 };
+                    RFIDCardInfoWrite rFIDCardInfoWrite = new RFIDCardInfoWrite();
+                    _HotflagBtnPressed = false;
+                    byte[] temp = rFIDCardInfoWrite.Block9(WriteCardDetails);
+                    if (MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, WriteCardDetails.CommanderRFIDCardMemoryBlock + 8, temp))
+                    {
+
+                    }
+                }
+
+                if(_FormatbtnPressed)
+                {
+                    _FormatbtnPressed = false;
+                    RFIDCardInfoWrite rFIDCardInfoWrite = new RFIDCardInfoWrite();
+                    CardDetails WriteCardDetails = new CardDetails()
+                    {
+                        cardUID = 0,
+                        AccessLevel = 0,
+                        ByPassBits = 0,
+                        Client_Group = 0,
+                        Client_Site = 0,
+                        EngineerName = "",
+                        EngineerUID = 0,
+                        Expiry_Date = DateTime.MinValue,
+                        HotFlagedDate = DateTime.MinValue,
+                        HotFlagedVID = 0,
+                        Hotflaged_status = false,
+                        IssuerUID = 0,
+                        Issue_Date = DateTime.MinValue,
+                        OperationalArea = 0,
+                        OperatorName = "",
+                        Options = 0,
+                        ProductCode = 0,
+                        Training_Date = DateTime.MinValue,
+                        VehicleGroup = Enumerable.Repeat((byte)0, 16).ToArray(),
+                        VID = Enumerable.Repeat((UInt16)0, 16).ToArray(),
+                        VehicleNames = Enumerable.Repeat("", 16).ToArray(),
+                        VehicleLicenceType = Enumerable.Repeat((uint)0, 32).ToArray(),
+                        Warning_Date = DateTime.MinValue
+                    };
+                    rFIDCardInfoWrite.WriteInfoToCard(WriteCardDetails);
                 }
 
                 if (IssuerCardBtnPressed)
@@ -87,7 +154,11 @@ namespace Mernok_RFID_Licence_Studio
                 #endregion
             }
             else
+            {
+                VMReturnData.OptionsPressed = false;
                 this.View.Visibility = Visibility.Collapsed;
+            }
+                
 
         }
 

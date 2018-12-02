@@ -150,7 +150,8 @@ namespace Mernok_RFID_Licence_Studio
             {
                 if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock, out output))
                 {
-
+                    if (output[2] == 0)
+                        return false;
                     AccessLevel_read(output[0]);                           //sets the licencetype string
                     Warn_Date_read(output[1], output[2], output[3]);        //sets the warning date
                     if (!formatted)

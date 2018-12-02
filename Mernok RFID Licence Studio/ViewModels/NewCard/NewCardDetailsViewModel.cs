@@ -130,7 +130,16 @@ namespace Mernok_RFID_Licence_Studio
                     ClientSitenum = 0;
                     ProductCode = mernokProductFile.mernokProductList.Select(t => t.ProductName).ToList();
                     ProductList_ret = 0;
+                    if ((char)VMReturnData.IssuerAccess == 'Z')
+                    {
+                        ClientEdit = true;
+                        AccessEdit = true;
 
+                    }
+                    else if ((char)VMReturnData.IssuerAccess == 'C')
+                    {
+                        ClientEdit = false;
+                    }
 
                     VMReturnData.VMCardDetails.Issue_Date = DateTime.Now;
                     ExpiryDate = DateTime.Now;
@@ -150,18 +159,6 @@ namespace Mernok_RFID_Licence_Studio
                     OperationalArea = VMReturnData.CopiedVMCardDetails.OperationalArea.ToString();
                     TrainDate = VMReturnData.CopiedVMCardDetails.Training_Date;
                     AccessLevelnum = (int)Math.Abs(AccessLevelList.IndexOf( ((RFIDCardInfoRead.AccessLevel_enum)VMReturnData.CopiedVMCardDetails.AccessLevel).ToString().Replace("_", " ")));
-
-                    if((char)VMReturnData.IssuerAccess == 'Z')
-                    {
-                        ClientEdit = true;
-                        AccessEdit = true;
-
-                    }
-                    else if ((char)VMReturnData.IssuerAccess == 'C')
-                    {
-                        ClientEdit = false;
-                    }
-
                     VehicleAccessType_ret = VMReturnData.CopiedVMCardDetails.Options;
                     ExpiryDate = VMReturnData.CopiedVMCardDetails.Expiry_Date;
                     WarningDate = VMReturnData.CopiedVMCardDetails.Warning_Date;
@@ -182,6 +179,7 @@ namespace Mernok_RFID_Licence_Studio
                     VMReturnData.VMCardDetails.Expiry_Date = ExpiryDate;
                     VMReturnData.VMCardDetails.AccessLevel = (byte)(RFIDCardInfoRead.AccessLevel_enum)Enum.Parse(typeof(RFIDCardInfoRead.AccessLevel_enum), AccessLevelList[(int)AccessLevelnum].Replace(" ", "_"));
                     VMReturnData.VMCardDetails.Options = VehicleAccessType_ret;
+                    VMReturnData.VMCardDetails.Hotflaged_status = false;
                 }
                 else
                 {

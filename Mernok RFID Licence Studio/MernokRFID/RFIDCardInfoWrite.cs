@@ -39,12 +39,35 @@ namespace Mernok_RFID_Licence_Studio
 
             //temp[0] = (byte)(RFIDCardInfoRead.AccessLevel_enum)Enum.Parse(typeof(RFIDCardInfoRead.AccessLevel_enum), WriteCardDetails.AccessLevel);
             temp[0] = Convert.ToByte(WriteCardDetails.AccessLevel);
-            temp[1] = Convert.ToByte(WriteCardDetails.Warning_Date.Year.ToString().Remove(0, 2), 16);
-            temp[2] = Convert.ToByte(WriteCardDetails.Warning_Date.Month.ToString(), 16);
-            temp[3] = Convert.ToByte(WriteCardDetails.Warning_Date.Day.ToString(), 16);
-            temp[4] = Convert.ToByte(WriteCardDetails.Expiry_Date.Year.ToString().Remove(0, 2), 16);
-            temp[5] = Convert.ToByte(WriteCardDetails.Expiry_Date.Month.ToString(), 16);
-            temp[6] = Convert.ToByte(WriteCardDetails.Expiry_Date.Day.ToString(), 16);
+            if(WriteCardDetails.Warning_Date.Year > 1000)
+            {
+                temp[1] = Convert.ToByte(WriteCardDetails.Warning_Date.Year.ToString().Remove(0, 2), 16);
+                temp[2] = Convert.ToByte(WriteCardDetails.Warning_Date.Month.ToString(), 16);
+                temp[3] = Convert.ToByte(WriteCardDetails.Warning_Date.Day.ToString(), 16);
+            }                
+            else
+            {
+                temp[1] = 0;
+                temp[2] = 0;
+                temp[3] = 0;
+            }
+                
+
+            
+            if (WriteCardDetails.Warning_Date.Year > 1000)
+            {
+                temp[4] = Convert.ToByte(WriteCardDetails.Expiry_Date.Year.ToString().Remove(0, 2), 16);
+                temp[5] = Convert.ToByte(WriteCardDetails.Expiry_Date.Month.ToString(), 16);
+                temp[6] = Convert.ToByte(WriteCardDetails.Expiry_Date.Day.ToString(), 16);
+            }               
+            else
+            {
+                temp[4] = 0;
+                temp[5] = 0;
+                temp[6] = 0;
+            }
+                
+            
             byte[] clientG = new byte[2];
             clientG = BitConverter.GetBytes(WriteCardDetails.Client_Group);
             temp[7] = clientG[1];
@@ -192,12 +215,17 @@ namespace Mernok_RFID_Licence_Studio
             temp[1] = UIDsplit[1];
             temp[2] = UIDsplit[2];
             temp[3] = UIDsplit[3];
-
-            temp[4] = Convert.ToByte(WriteCardDetails.Training_Date.Year.ToString().Remove(0,2), 16);
+            if(WriteCardDetails.Training_Date.Year>1000)
+                temp[4] = Convert.ToByte(WriteCardDetails.Training_Date.Year.ToString().Remove(0,2), 16);
+            else
+                temp[4] = 0;
             temp[5] = Convert.ToByte(WriteCardDetails.Training_Date.Month.ToString(), 16);
             temp[6] = Convert.ToByte(WriteCardDetails.Training_Date.Day.ToString(), 16);
 
-            temp[7] = Convert.ToByte(WriteCardDetails.Issue_Date.Year.ToString().Remove(0, 2), 16);
+            if(WriteCardDetails.Issue_Date.Year>1000)
+                temp[7] = Convert.ToByte(WriteCardDetails.Issue_Date.Year.ToString().Remove(0, 2), 16);
+            else
+                temp[7] =0;
             temp[8] = Convert.ToByte(WriteCardDetails.Issue_Date.Month.ToString(), 16);
             temp[9] = Convert.ToByte(WriteCardDetails.Issue_Date.Day.ToString(), 16);
 
@@ -225,10 +253,12 @@ namespace Mernok_RFID_Licence_Studio
         {
 
             byte[] temp = new byte[16];
-
-            temp[0] = Convert.ToByte(WriteCardDetails.Issue_Date.Year.ToString().Remove(0, 2), 16);
-            temp[1] = Convert.ToByte(WriteCardDetails.Issue_Date.Month.ToString(), 16);
-            temp[2] = Convert.ToByte(WriteCardDetails.Issue_Date.Day.ToString(), 16);
+            if(WriteCardDetails.HotFlagedDate.Year>1000)
+                temp[0] = Convert.ToByte(WriteCardDetails.HotFlagedDate.Year.ToString().Remove(0, 2), 16);
+            else
+                temp[0] = 0;
+            temp[1] = Convert.ToByte(WriteCardDetails.HotFlagedDate.Month.ToString(), 16);
+            temp[2] = Convert.ToByte(WriteCardDetails.HotFlagedDate.Day.ToString(), 16);
 
             byte[] UIDsplit = BitConverter.GetBytes(WriteCardDetails.HotFlagedVID);
 

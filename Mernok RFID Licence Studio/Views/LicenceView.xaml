@@ -163,8 +163,8 @@
         <Grid Grid.Row="12" Grid.Column="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.8*" />
+                <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -182,7 +182,7 @@
                    FontSize="20"  Margin="0"/>
             <Label Name="HotFlagDate" Content="{Binding HotFlagDate}" Grid.Row="1" Grid.Column="1" BorderBrush="#FF005195" BorderThickness="1"
                    FontSize="20"  Margin="0"/>
-            <Label Name="HotFlagVID" Content="{Binding HotFlagVID}" Grid.Row="1" Grid.Column="2" BorderBrush="#FF005195" BorderThickness="1"
+            <Label Name="HotFlagVID" Content="{Binding HotFlagUID}" Grid.Row="1" Grid.Column="2" BorderBrush="#FF005195" BorderThickness="1"
                    FontSize="20"  Margin="0"/>
 
         </Grid>
