@@ -14,7 +14,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="UID"  HorizontalContentAlignment="Center" HorizontalAlignment="Center" Content="Card to be edited not in field" Height="70"   FontSize="48" Grid.Row="1"/>
-        <Label HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Please present the card that is to be edited"  FontSize="28" Grid.Row="2"/>
+        <Label x:Name="UID"  HorizontalContentAlignment="Center" HorizontalAlignment="Center" Content="Card to be edited not in field" Height="70"   FontSize="52" Grid.Row="1"/>
+        <Label HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Please present the card that is to be edited:"  FontSize="28" Grid.Row="2"/>
+        <Label HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Content="{Binding EditUID}"  FontSize="50" Grid.Row="3"/>
     </Grid>
 </UserControl>

@@ -14,8 +14,11 @@ namespace Mernok_RFID_Licence_Studio
     public class NewCardTypeViewModel : ViewModel
     {
         public ICommand AddBtn { get; private set; }
+        public ICommand RemoveBtn { get; private set; }
+
         private NewCardTypeView _viewInstance;
         private bool AddbtnPressed = false;
+        private bool RemovebtnPressed = false;
         bool OneTimeRead;
         int index = 0;
         private ObservableCollection<string> _vehicletypeList = new ObservableCollection<string>();
@@ -26,6 +29,7 @@ namespace Mernok_RFID_Licence_Studio
         {
 
             AddBtn = new DelegateCommand(AddbtnHandler);
+            RemoveBtn = new DelegateCommand(RemoveBtnHandler);
             control.DataContext = this;
             _viewInstance = (NewCardTypeView)control;
         }
@@ -33,6 +37,11 @@ namespace Mernok_RFID_Licence_Studio
         public void AddbtnHandler()
         {
             AddbtnPressed = true;
+        }
+
+        private void RemoveBtnHandler()
+        {
+            RemovebtnPressed = true;
         }
 
         public override void Update(ViewModelReturnData VMReturnData)
@@ -104,6 +113,36 @@ namespace Mernok_RFID_Licence_Studio
                     else
                         BtnAddEnabled = false;
                 }
+
+                if (RemovebtnPressed)
+                {
+                    RemovebtnPressed = false;
+                    if (VehicleTypeList2.Count() > 0)
+                    {
+                        BtnremoveEnabled = true;
+                        index--;
+                        VMReturnData.VMCardDetails.VehicleLicenceType[index] = 0;
+                        VehicleTypeList.Add(VehicleTypeList2.Last());
+                        VehicleTypeList2.RemoveAt(VehicleTypeList2.Count - 1);
+                    }
+
+                }
+
+                if (VehicleTypeList.Count > 0)
+                {
+                    ByEnabled = BtnAddEnabled = true;
+                }
+                else
+                    BtnAddEnabled = false;
+
+                if (VehicleTypeList2.Count() > 0)
+                {
+                    BtnremoveEnabled = true;
+                }
+                else
+                {
+                    BtnremoveEnabled = false;
+                }
             }
             else
             {
@@ -160,6 +199,7 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool _ByEnabled;
         private bool _btnAddEnabled = true;
+        private bool _BtnremoveEnabled;
 
         public bool ByEnabled
         {
@@ -179,6 +219,19 @@ namespace Mernok_RFID_Licence_Studio
                 RaisePropertyChanged("BtnAddEnabled");
             }
          }
+
+        public bool BtnremoveEnabled
+        {
+            get
+            {
+                return _BtnremoveEnabled;
+            }
+            private set
+            {
+                _BtnremoveEnabled = value;
+                RaisePropertyChanged("BtnremoveEnabled");
+            }
+        }
         #endregion
 
     }

@@ -16,6 +16,7 @@ namespace Mernok_RFID_Licence_Studio
         private NewCardGroupView _viewInstance;
 
         public ICommand AddBtn { get; private set; }
+        public ICommand RemoveBtn { get; private set; }
 
         private bool AddbtnPressed = false;
         bool OneTimeRead;
@@ -27,9 +28,12 @@ namespace Mernok_RFID_Licence_Studio
         public NewCardGroupViewModel(UserControl control) : base(control)
         {
             AddBtn = new DelegateCommand(AddbtnHandler);
+            RemoveBtn = new DelegateCommand(RemoveBtnHandler);
             control.DataContext = this;
             _viewInstance = (NewCardGroupView)control;
         }
+
+
 
         public override void Update(ViewModelReturnData VMReturnData)
         {
@@ -76,8 +80,7 @@ namespace Mernok_RFID_Licence_Studio
                     for (int i = 0; i < index; i++)
                     {
                         VMReturnData.VMCardDetails.VehicleGroup[i] = (byte)(TagTypesL.MernokAssetGroups.IndexOf(TagTypesL.MernokAssetGroups.Where(p => p.GroupName == VehiclegroupList2[i]).FirstOrDefault()) + 1);
-                    }
-                    ByEnabled = BtnAddEnabled = true;
+                    }                    
                     VMReturnData.NextButtonEnabled = VehiclegroupList2.Count() > 0 ? true : false;
                     VMReturnData.VMCardDetails.ByPassBits = (uint)(VMReturnData.VMCardDetails.ByPassBits & ~0b00000100);
 
@@ -85,7 +88,7 @@ namespace Mernok_RFID_Licence_Studio
 
                 if (AddbtnPressed)
                 {
-                    if (VehiclegroupList2.Count() < 15)
+                    if (VehiclegroupList2.Count() < 15 && VehicleGroupList.Count>0)
                     {
                         VehiclegroupList2.Add(VehicleGroupList[VehicleGroupnum]);
                         VMReturnData.VMCardDetails.VehicleGroup[index] = (byte)(TagTypesL.MernokAssetGroups.IndexOf(TagTypesL.MernokAssetGroups.Where(p => p.GroupName == VehicleGroupList[VehicleGroupnum]).FirstOrDefault()) + 1);
@@ -95,11 +98,37 @@ namespace Mernok_RFID_Licence_Studio
                         VehicleGroupnum = 0;
 
                     }
-                    else
-                        BtnAddEnabled = false;
-                    
-                        
-                    
+                                                                                  
+                }
+
+                if(RemovebtnPressed)
+                {
+                    RemovebtnPressed = false;
+                    if (VehiclegroupList2.Count() > 0)
+                    {
+                        BtnremoveEnabled = true;
+                        index--;
+                        VMReturnData.VMCardDetails.VehicleGroup[index] = 0;
+                        VehicleGroupList.Add(VehiclegroupList2.Last());
+                        VehiclegroupList2.RemoveAt(VehiclegroupList2.Count-1);                      
+                    }
+
+                }
+
+                if(VehicleGroupList.Count > 0)
+                {
+                    ByEnabled = BtnAddEnabled = true;
+                }
+                else
+                    BtnAddEnabled = false;
+
+                if (VehiclegroupList2.Count()>0)
+                {
+                    BtnremoveEnabled = true;
+                }
+                else
+                {
+                    BtnremoveEnabled = false;
                 }
             }
             else
@@ -151,6 +180,11 @@ namespace Mernok_RFID_Licence_Studio
             AddbtnPressed = true;
         }
 
+        private void RemoveBtnHandler()
+        {
+            RemovebtnPressed = true;
+        }
+
         private bool _Bypassed;
 
         public bool Bypassed
@@ -161,6 +195,8 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool _ByEnabled;
         private bool _btnAddEnabled = true;
+        private bool _BtnremoveEnabled;
+        private bool RemovebtnPressed;
 
         public bool ByEnabled
         {
@@ -178,6 +214,19 @@ namespace Mernok_RFID_Licence_Studio
             {
                 _btnAddEnabled = value;
                 RaisePropertyChanged("BtnAddEnabled");
+            }
+        }
+
+        public bool BtnremoveEnabled
+        {
+            get
+            {
+                return _BtnremoveEnabled;
+            }
+            private set
+            {
+                _BtnremoveEnabled = value;
+                RaisePropertyChanged("BtnremoveEnabled");
             }
         }
     }

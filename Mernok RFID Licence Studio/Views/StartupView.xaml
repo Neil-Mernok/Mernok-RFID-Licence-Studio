@@ -46,7 +46,7 @@
 
         <!--:DesignHeight="600" d:DesignWidth="1140" Background="#FF005195" -->
         <Button x:Name="ReadCardInfobtn" Content="Read Card in field" Command="{Binding ReadCardInfobtn}" IsEnabled="{Binding CardPresent}" Height="60" Width="520"   FontSize="48" Grid.Row="2" HorizontalAlignment="Center" Visibility="Collapsed"/>
-        <Button x:Name="NewCardInfobtn" Content="New Card" Command="{Binding NewCardInfobtn}" Height="60" Width="520"   FontSize="48" Grid.Row="3" HorizontalAlignment="Center"  Margin="10" Visibility="Visible"/>
+        <Button x:Name="NewCardInfobtn" Content="New Card" Command="{Binding NewCardInfobtn}" Height="60" Width="520"   FontSize="48" Grid.Row="3" HorizontalAlignment="Center"  Margin="10" Visibility="Collapsed"/>
 
 
 
@@ -67,6 +67,6 @@
             </ProgressBar.RenderTransform>
         </ProgressBar>
         <Image Grid.Row="0"  HorizontalAlignment="Center" Source="{Binding CardImage}" MaxHeight="300" Margin="0,50,0,0"/>
-        <!--<Label Content="{Binding NumberofRWD}" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Height="70" Width="136" FontSize="36"/>-->
+        <Label Content="Reading..." HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4"  Height="70" FontSize="36" Visibility="{Binding readVis}"/>
     </Grid>
 </UserControl>

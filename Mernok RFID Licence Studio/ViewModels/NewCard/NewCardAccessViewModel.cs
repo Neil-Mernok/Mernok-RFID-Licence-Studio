@@ -74,7 +74,7 @@ namespace Mernok_RFID_Licence_Studio
 
                 
 
-                if(VMReturnData.CardInField && VMReturnData.UID != VMReturnData.EditCardUID)
+                if(VMReturnData.CardInField && ((VMReturnData.UID != VMReturnData.EditCardUID && VMReturnData.EditCard) || VMReturnData.UID != VMReturnData.NewCardUID))
                 {
                     if (!onetimeread)
                     {

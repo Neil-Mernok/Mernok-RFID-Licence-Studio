@@ -54,6 +54,7 @@ namespace Mernok_RFID_Licence_Studio
             ReadProgress = default_max;
             #endregion
 
+            readVis = Visibility.Collapsed;
             formated = false;
             control.DataContext = this;
             _viewInstance = (StartupView)control;
@@ -68,6 +69,7 @@ namespace Mernok_RFID_Licence_Studio
             {
                 ProgressBarTimer.Stop();
                 doneProgress = true;
+                readVis = Visibility.Collapsed;
             }
         }
         #endregion
@@ -86,28 +88,42 @@ namespace Mernok_RFID_Licence_Studio
                     if (VMReturnData.prevUID == 0)
                     {
                         VMReturnData.prevUID = VMReturnData.UID;
+                        readVis = Visibility.Collapsed;
                     }
                     else if (VMReturnData.prevUID != VMReturnData.UID)
                     {
                         VMReturnData.cardChanged = true;
+                        VMReturnData.CardFormatError = false;
                         oneRead = false;
                         VMReturnData.prevUID = VMReturnData.UID;
                     }
 
                     if (VMReturnData.cardChanged && VMReturnData.LicenceView_Active && VMReturnData.EditCard != true)
                     {
-                        VMReturnData.BackApp();                     
+                        VMReturnData.BackApp();                       
                         VMReturnData.cardChanged = false;
                     }
                     else if(VMReturnData.NewCardWindow < 1 && formated && !VMReturnData.NewCardAccess_Active)
                     {
-                        VMReturnData.cardChanged = false;
-                        if(!oneRead)
+                        VMReturnData.cardChanged = false;                        
+                        if (!oneRead)
                         {
                             ReadCardInfoHandler();
+                            readVis = Visibility.Visible;
                             oneRead = true;
                         }
                         
+                    }
+                    else if (VMReturnData.NewCardWindow < 1 && !formated && !VMReturnData.NewCardAccess_Active)
+                    {
+                        VMReturnData.cardChanged = false;
+                        if (!oneRead)
+                        {
+                            NewCardInfoHandler();
+                            readVis = Visibility.Visible;
+                            oneRead = true;
+                        }
+
                     }
 
                     UID = RFIDCardInfoRead.UIDtoString(VMReturnData.UID);
@@ -117,7 +133,13 @@ namespace Mernok_RFID_Licence_Studio
                     if (formated)
                         CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
                     else
+                    {
                         CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardFormatError.png", UriKind.Relative));
+                        
+                        //readVis = Visibility.Collapsed;
+                    }
+                    VMReturnData.cardInfoRead.formatted = formated;
+
 
                     if (ReadCardPressed == true)
                     {
@@ -125,7 +147,18 @@ namespace Mernok_RFID_Licence_Studio
                         doneProgress = false;
                         ProgressBarTimer.Start();
                         VMReturnData.cardInfoRead.ReadInfo(VMReturnData.UID);                                                                                
-                    }                    
+                    }
+
+                    if (NewCardPressed == true)
+                    {
+                        //VMReturnData.NewCardAccess_Active = true;
+                        ReadCardInfoHandler();
+                        VMReturnData.EditCard = false;
+                        VMReturnData.EditCardUID = 0;
+                        VMReturnData.NewCardWindow = 0;
+                        VMReturnData.NewCardUID = VMReturnData.UID;
+                        NewCardPressed = false;
+                    }
                 }
                 else
                 {
@@ -136,21 +169,13 @@ namespace Mernok_RFID_Licence_Studio
                     oneRead = false;
                     this.CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
                     ProgressBarTimer.Stop();
+                    readVis = Visibility.Collapsed;
                 }
 
                 if (OptionsPressed)
                 {
                     OptionsPressed = false;
                     VMReturnData.MenuView_Active = true;
-                }
-
-                if (NewCardPressed == true)
-                {
-                    VMReturnData.NewCardAccess_Active = true;
-                    VMReturnData.EditCard = false;
-                    VMReturnData.NewCardWindow = 0;
-                    VMReturnData.NewCardUID = 0;
-                    NewCardPressed = false;
                 }
 
                 if (doneProgress)
@@ -226,6 +251,15 @@ namespace Mernok_RFID_Licence_Studio
             get { return _PresentCard; }
             set { _PresentCard = value; base.RaisePropertyChanged("PresentCard"); }
         }
+
+        private Visibility _readVis;
+
+        public Visibility readVis
+        {
+            get { return _readVis; }
+            set { _readVis = value; base.RaisePropertyChanged("readVis"); }
+        }
+
 
         private BitmapImage _CardImage;
 

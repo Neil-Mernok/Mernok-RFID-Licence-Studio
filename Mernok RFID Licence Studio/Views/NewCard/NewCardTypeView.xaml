@@ -40,10 +40,11 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>-->
         </ComboBox>
-        <Button Name="AddBtn" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left"   FontSize="25" Width="100" 
+        <Button Name="AddBtn" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left"   FontSize="25" Width="150" 
                 Command="{Binding AddBtn}" IsEnabled="{Binding BtnAddEnabled}"/>
 
         <!--Row 4-->
+        <Button x:Name="Remove" Grid.Row="4" Grid.Column="2" Content="Remove" HorizontalAlignment="Left" Height="50"  FontSize="25" Width="150" Command="{Binding RemoveBtn}" IsEnabled="{Binding BtnremoveEnabled}"/>
         <Label Content="Vehicle Type List:" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="0"   FontSize="25" Foreground="White"/>
         <ListBox Name="Vehicles" Grid.Row="4" Grid.Column="1" Grid.RowSpan="4" ItemsSource="{Binding DisplayVehicleList , Mode=TwoWay}" Background="#FFE0E0E0" BorderThickness="2"  BorderBrush="#FF005195" FontSize="25">
             <!--<ListBox.ItemTemplate>

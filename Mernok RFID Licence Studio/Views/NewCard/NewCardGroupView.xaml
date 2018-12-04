@@ -42,7 +42,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>-->
         </ComboBox>
-        <Button Name="AddBtn" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left"   FontSize="25" Width="100" Command="{Binding AddBtn}" IsEnabled="{Binding BtnAddEnabled}"/>
+        <Button Name="AddBtn" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left"   FontSize="25" Width="150" Command="{Binding AddBtn}" IsEnabled="{Binding BtnAddEnabled}"/>
 
         <!--Row 4-->
         <Label Content="Vehicle Group List:" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="0"   FontSize="25" Foreground="White"/>
@@ -64,5 +64,6 @@
                 <ScaleTransform ScaleX="3" ScaleY="3"/>
             </CheckBox.LayoutTransform>
         </CheckBox>
+        <Button x:Name="AddBtn_Copy" Grid.Row="4" Grid.Column="2" Content="Remove" HorizontalAlignment="Left" Height="50"  FontSize="25" Width="150" Command="{Binding RemoveBtn}" IsEnabled="{Binding BtnremoveEnabled}"/>
     </Grid>
 </UserControl>
