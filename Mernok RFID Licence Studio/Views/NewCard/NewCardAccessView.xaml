@@ -20,12 +20,12 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--Row 0-->
+        <Image Grid.Row="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Source="{Binding CardImage}" />
 
-        
         <!--Row 1-->
         <Label Content="{Binding WarningMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="45" Grid.Row="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Foreground="{Binding MessageColour}"/>
         

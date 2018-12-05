@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Threading;
 using static Mernok_RFID_Licence_Studio.RFIDCardInfoRead;
+using System.Windows.Media.Imaging;
 
 namespace Mernok_RFID_Licence_Studio
 {
@@ -39,6 +40,7 @@ namespace Mernok_RFID_Licence_Studio
         public void ClearDetails()
         {
             WarningMessage = "Present Issuer card";
+            this.CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
             MessageColour = Brushes.OrangeRed;
             IssuerUID = "";
             EngineerName = "";
@@ -136,12 +138,14 @@ namespace Mernok_RFID_Licence_Studio
                                 WarningMessage = "Issuer Card has expired";
                             }
                             #endregion
+                            CardImage = new BitmapImage(new Uri(@"/Resources/Images/CArdInvalid.png", UriKind.Relative));
                             onetimeread = true;                          
                         }
                         else
                         {
                             ClearDetails();
                             WarningMessage = "Issuer Card not formatted";
+                            CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardFormatError.png", UriKind.Relative));
                         }
                        
                     }
@@ -159,6 +163,7 @@ namespace Mernok_RFID_Licence_Studio
                             VMReturnData.NextButtonEnabled = true;
                             MessageColour = Brushes.White;
                             WarningMessage = "Card VALID: Click next to continue";
+                            CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
                             VMReturnData.VMCardDetails.EngineerName = cardInfoRead.cardDetails.EngineerName;
                             VMReturnData.VMCardDetails.IssuerUID = cardInfoRead.cardDetails.IssuerUID;
                             VMReturnData.VMCardDetails.EngineerUID = cardInfoRead.cardDetails.EngineerUID;
@@ -190,6 +195,15 @@ namespace Mernok_RFID_Licence_Studio
         }
 
         #region Binding Properties
+
+        private BitmapImage _CardImage;
+
+        public BitmapImage CardImage
+        {
+            get { return _CardImage; }
+            set { _CardImage = value; base.RaisePropertyChanged("CardImage"); }
+        }
+
         private string _AccessLevel;
 
         public string AccessLevel
