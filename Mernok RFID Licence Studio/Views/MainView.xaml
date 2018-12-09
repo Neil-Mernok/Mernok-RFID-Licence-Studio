@@ -34,6 +34,7 @@
             <Views:NewCardVehicleNamesView x:Name="NewCardVehicleNamesView" Grid.Column="1" Grid.ColumnSpan="3" Margin="0" Grid.Row="1" Grid.RowSpan="3" Visibility="Collapsed"/>
             <Views:NewCardTypeView x:Name="NewCardTypeView" Grid.Column="1" Grid.ColumnSpan="3" Margin="0" Grid.Row="1" Grid.RowSpan="3" Visibility="Collapsed"/>
             <Views:NewCardGroupView x:Name="NewCardGroupView" Grid.Column="1" Grid.ColumnSpan="3" Margin="0" Grid.Row="1" Grid.RowSpan="3" Visibility="Collapsed"/>
+            <Views:ProgramPromptView x:Name="ProgramPromptView" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
             <Views:CardProgramDoneView x:Name="CardProgramComplete" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
             <Label x:Name="CardInField"  Grid.Column="4" HorizontalAlignment="Left" Margin="0,203,0,0" Grid.Row="3" VerticalAlignment="Top" Width="100" Content="{Binding CardInField}"/>
             <Views:CardFormatError x:Name="CardError" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
@@ -44,6 +45,7 @@
             <Views:AboutView x:Name="AboutView" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
             <Views:HelpView x:Name="HelpView" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed"/>
             <Views:EditCardWarningView x:Name="EditCardWarningView" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Visibility="Collapsed"/>
+            <Views:NewCardWarningView x:Name="NewCardWarningView" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" Visibility="Collapsed"/>
             <Views:NoRWDView x:Name="NoRWDView" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="5" Visibility="Visible"/>
             <Image HorizontalAlignment="Right" Height="83" Grid.Row="2" VerticalAlignment="Bottom"  Margin="20" Source="/Mernok RFID Licence Studio;component/Resources/Images/Mernok_logo_2016.png"/>
 

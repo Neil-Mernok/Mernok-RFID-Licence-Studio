@@ -73,6 +73,7 @@ namespace Mernok_RFID_Licence_Studio
 
         //alternate functions
         public bool ExitPromtView_Active = false;
+        public bool ProgramPromtView_Active = false;
         public bool MenuView_Active = false;
 
         //descriptive windows
@@ -88,6 +89,7 @@ namespace Mernok_RFID_Licence_Studio
         public bool CardProgramFail = false;
         public bool CardStillIssuer_Active = false;
         public bool EditCardWarn_Active = false;
+        public bool NewCardWarn_Active = false;
 
         //messages
         public bool CardProramed_done = false;
@@ -135,16 +137,11 @@ namespace Mernok_RFID_Licence_Studio
                     CardStillIssuer_Active = true;
                     NewCardWindow--;
                 }
-                else if (CardInfoWrite.WriteInfoToCard(VMCardDetails) == 100)
+                else 
                 {
-                    CardProramed_done = true;
-                    App_datareset();
+                    ProgramPromtView_Active = true;
                 }
-                else
-                {
-                    CardProgramFail = true;
-                    NewCardWindow--;
-                }
+
                     
 
             }
@@ -240,11 +237,8 @@ namespace Mernok_RFID_Licence_Studio
 
             if (NewCardWindow == 1)
             {
-                HelpMessage = "This window requires a valid Issuer card to continue. A valid Issuer card requires:" +
-                     " \n 1. The card Expiry date to be one day in the future from today" +
-                     " \n 2. The card Access level to be either a Training Officer or a Mernok Engineer" +
-                     " \n 3. A Training Officer is only allowed to edit Operator, Trainee Operator, and Temporary Operator cards." +
-                     "\n \n If you do not have such a card, you can request an Issuer card from the options menu at the begining of the application.";
+                HelpMessage = "This window requires you to fill the required details as indicated, when these conditions are satisfied, " +
+                    "an arrow will appear that will allow you to continue to the next step of creating a license card.";
             }
             if (NewCardWindow == 2)
             {
@@ -256,13 +250,16 @@ namespace Mernok_RFID_Licence_Studio
 
                     case 0:
                         //NewCardType_Active = true;
+                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card.";
                         break;
                     case 2:
                         //NewCardVNames_Active = true;
+
                         break;
 
                     case 3:
                         //NewCardGroup_Active = true;
+                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card.";
                         break;
 
                     default:

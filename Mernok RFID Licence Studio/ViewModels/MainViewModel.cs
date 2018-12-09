@@ -80,6 +80,13 @@ namespace Mernok_RFID_Licence_Studio
                 }
                 else
                     VMReturnData.EditCardWarn_Active = false;
+
+                if (!VMReturnData.EditCard && VMReturnData.NewCardUID != VMReturnData.UID && VMReturnData.NewCardWindow >= 1)
+                {
+                    VMReturnData.NewCardWarn_Active = true;
+                }
+                else
+                    VMReturnData.NewCardWarn_Active = false;
             }
 
             VMReturnData.StartUpView_Active = VMReturnData.RWD_connected;
