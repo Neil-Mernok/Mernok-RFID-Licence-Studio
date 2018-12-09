@@ -82,7 +82,7 @@ namespace Mernok_RFID_Licence_Studio
                 this.View.Visibility = Visibility.Visible;
                 #region Startup operation
                 CardPresent = formated & VMReturnData.CardInField;
-                if (VMReturnData.CardInField && !VMReturnData.OptionsPressed)
+                if (VMReturnData.CardInField && !VMReturnData.OptionsPressed && !VMReturnData.NewIssuerCard)
                 {
 
                     if (VMReturnData.prevUID == 0)

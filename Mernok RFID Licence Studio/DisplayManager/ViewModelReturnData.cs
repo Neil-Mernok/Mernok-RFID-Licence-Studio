@@ -19,6 +19,7 @@ namespace Mernok_RFID_Licence_Studio
         public uint EditCardUID = 0;
         public uint IssuerUID = 0;
         public uint NewCardUID = 0;
+        public uint NewIssuerUID = 0;
         public int NumberofRWD = 0;
         public bool cardChanged = false;
         public bool RWD_connected = false;
@@ -34,6 +35,7 @@ namespace Mernok_RFID_Licence_Studio
         public int NewCardWindow = 0;
         public bool EditCard = false;
         public bool IssuerCardTime = false;
+        public bool NewIssuerCard = false;
         public CardDetails VMCardDetails = new CardDetails();
         public CardDetails CopiedVMCardDetails = new CardDetails();
         public RFIDCardInfoWrite CardInfoWrite = new RFIDCardInfoWrite();
@@ -75,6 +77,7 @@ namespace Mernok_RFID_Licence_Studio
         public bool ExitPromtView_Active = false;
         public bool ProgramPromtView_Active = false;
         public bool MenuView_Active = false;
+        public bool NewIssuerPresent_Active = false;
 
         //descriptive windows
         public bool AboutWindow_Active = false;
@@ -99,6 +102,10 @@ namespace Mernok_RFID_Licence_Studio
         //global button events
         public void NextWindow()
         {
+            if(NewIssuerPresent_Active)
+            {
+                NewIssuerUID = UID;
+            }
             NewCardWindow++;
             if (NewCardWindow==1)
             {
@@ -139,7 +146,7 @@ namespace Mernok_RFID_Licence_Studio
                 }
                 else 
                 {
-                    ProgramPromtView_Active = true;
+                   ProgramPromtView_Active = true;
                 }
 
                     
@@ -218,7 +225,7 @@ namespace Mernok_RFID_Licence_Studio
             VMCardDetails = new CardDetails();
             CardRead_Done = false;
             NavigationBar_Active = false;
-            NewCardAccess_Active = LicenceView_Active = NewCardDetail_Active = NewCardVID_Active = NewCardVNames_Active = NewCardGroup_Active = NewCardType_Active = NewCardIssuer_Active = false;
+            NewCardAccess_Active = LicenceView_Active = NewCardDetail_Active = NewCardVID_Active = NewCardVNames_Active = NewCardGroup_Active = NewCardType_Active = NewIssuerPresent_Active = NewCardIssuer_Active = false;
             EditCard = false;
             NewCardWindow = 0;
         }

@@ -57,4 +57,12 @@ namespace Mernok_RFID_Licence_Studio
         public string[] VehicleNames = new string[15];     //adress [C0..CE]
 
     }
+
+    public class CardDetailsFile
+    {
+        public CardDetails FCardDetails;
+        public UInt16 version;
+        public DateTime dateCreated;
+        public string createdBy;            //Name of file creator
+    }
 }

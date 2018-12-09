@@ -20,6 +20,8 @@ namespace Mernok_RFID_Licence_Studio
 
         public ICommand IssuerCardBtn { get; private set; }
 
+        public ICommand IssuerFileCardBtn { get; private set; }
+
         public ICommand Exitbtn { get; private set; }
 
         public ICommand Formatbtn { get; private set; }
@@ -27,6 +29,9 @@ namespace Mernok_RFID_Licence_Studio
         private bool AboutBtnPressed = false;
 
         private bool IssuerCardBtnPressed = false;
+
+        private bool IssuerFileCardBtnPressed = false;
+
 
         private bool _buttonExitPressed = false;
 
@@ -39,11 +44,17 @@ namespace Mernok_RFID_Licence_Studio
         {
             AboutBtn = new DelegateCommand(AboutBtnHandler);
             IssuerCardBtn = new DelegateCommand(IssuerCardBtnHandler);
+            IssuerFileCardBtn = new DelegateCommand(IssuerFileCardBtnHandler);
             Exitbtn = new DelegateCommand(ExitBtnHandler);
             HotFlag = new DelegateCommand(HotFlagBtnHandler);
             Formatbtn = new DelegateCommand(Formatbtnhandler);
             control.DataContext = this;
             _viewInstance = (MenuView)control;
+        }
+
+        private void IssuerFileCardBtnHandler()
+        {
+            IssuerFileCardBtnPressed = true;
         }
 
         private void Formatbtnhandler()
@@ -139,11 +150,19 @@ namespace Mernok_RFID_Licence_Studio
                 if (IssuerCardBtnPressed)
                 {
                     IssuerCardBtnPressed = false;
-                    VMReturnData.NewCardIssuer_Active = true;
+                    VMReturnData.NewIssuerPresent_Active = true;
+                    VMReturnData.NewIssuerCard = true;
                     VMReturnData.MenuView_Active = false;
 
 
                 }
+
+                if(IssuerFileCardBtnPressed)
+                {
+                    IssuerFileCardBtnPressed = false;
+                    VMReturnData.NewCardIssuer_Active = true;
+                }
+                
 
                 #region Exit button
                 else if (_buttonExitPressed)
@@ -171,6 +190,7 @@ namespace Mernok_RFID_Licence_Studio
         }
 
         private Visibility _issueCardVis;
+        
 
         public Visibility IssueCardVis
         {

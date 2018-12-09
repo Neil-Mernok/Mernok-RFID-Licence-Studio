@@ -110,7 +110,8 @@ namespace Mernok_RFID_Licence_Studio
                 {window.EditCardWarningView.Name, new EditCardWarningViewModel(window.EditCardWarningView) },
                 { window.HelpView.Name, new HelpViewModel(window.HelpView) },
                 { window.NewCardWarningView.Name, new NewCardWarningViewModel(window.NewCardWarningView) },
-                { window.ProgramPromptView.Name, new ProgramPromptViewModel(window.ProgramPromptView) }
+                { window.ProgramPromptView.Name, new ProgramPromptViewModel(window.ProgramPromptView) },
+                { window.NewIssuerPresentView.Name, new NewIssuerPresentViewModel(window.NewIssuerPresentView) }
             };
 
             ViewsLoaded = true;

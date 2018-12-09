@@ -47,20 +47,45 @@ namespace Mernok_RFID_Licence_Studio
             {
                 this.View.Visibility = Visibility.Visible;
 
+                if(VMReturnData.NewIssuerCard)
+                {
+                    ProgramPrompt = "Do you wish to save this card file?";
+                }
+                else
+                {
+                    ProgramPrompt = "Do you wish to Program this card?";
+                }
+
                 if (OkButtonPressed)
                 {
                     OkButtonPressed = false;
                     VMReturnData.ProgramPromtView_Active = false;
-                    if (VMReturnData.CardInfoWrite.WriteInfoToCard(VMReturnData.VMCardDetails) == 100)
+                    if (!VMReturnData.NewIssuerCard)
                     {
-                        VMReturnData.CardProramed_done = true;
-                        VMReturnData.App_datareset();
+                        if (VMReturnData.CardInfoWrite.WriteInfoToCard(VMReturnData.VMCardDetails) == 100)
+                        {
+                            VMReturnData.CardProramed_done = true;
+                            VMReturnData.App_datareset();
+                        }
+                        else
+                        {
+                            VMReturnData.CardProgramFail = true;
+                            VMReturnData.NewCardWindow--;
+                        }
                     }
                     else
                     {
-                        VMReturnData.CardProgramFail = true;
-                        VMReturnData.NewCardWindow--;
+                        CardDetailsFile cardDetailsFile = new CardDetailsFile();
+                        cardDetailsFile.createdBy = "N. Pretorius";
+                        cardDetailsFile.dateCreated = DateTime.Now;
+                        cardDetailsFile.version = 1;
+                        VMReturnData.VMCardDetails.cardUID = VMReturnData.NewIssuerUID;
+                        cardDetailsFile.FCardDetails = VMReturnData.VMCardDetails;
+                        CardDetailManager.CreateCardDetailFile(cardDetailsFile);
+
+
                     }
+
                 }
 
                 if (NoButtonPressed)
@@ -73,6 +98,15 @@ namespace Mernok_RFID_Licence_Studio
             else
                 this.View.Visibility = Visibility.Collapsed;
 
+        }
+
+
+        private string _ProgramPrompt;
+
+        public string ProgramPrompt
+        {
+            get { return _ProgramPrompt; }
+            set { _ProgramPrompt = value; RaisePropertyChanged("ProgramPrompt"); }
         }
 
     }

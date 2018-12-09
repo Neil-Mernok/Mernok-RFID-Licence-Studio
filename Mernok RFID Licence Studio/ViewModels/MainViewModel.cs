@@ -81,7 +81,7 @@ namespace Mernok_RFID_Licence_Studio
                 else
                     VMReturnData.EditCardWarn_Active = false;
 
-                if (!VMReturnData.EditCard && VMReturnData.NewCardUID != VMReturnData.UID && VMReturnData.NewCardWindow >= 1)
+                if (!VMReturnData.EditCard && (VMReturnData.NewCardUID != VMReturnData.UID && VMReturnData.NewIssuerUID != VMReturnData.UID) && VMReturnData.NewCardWindow >= 1)
                 {
                     VMReturnData.NewCardWarn_Active = true;
                 }
@@ -98,6 +98,10 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.NavigationBar_Active = true;
             }
             else if(VMReturnData.NewCardAccess_Active)
+            {
+                VMReturnData.NavigationBar_Active = true;
+            }
+            else if (VMReturnData.NewIssuerPresent_Active)
             {
                 VMReturnData.NavigationBar_Active = true;
             }

@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\GeneralFunctions.cs" />
+    <Compile Include="MernokRFID\CardDetailManager.cs" />
     <Compile Include="MernokRFID\CardDetails.cs" />
     <Compile Include="DisplayManager\DefaultDisplayManager.cs" />
     <Compile Include="DisplayManager\ViewModelReturnData.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Infrastructure\IRaiseCanExecuteChanged.cs" />
     <Compile Include="NavigationBarTemplate\RuleTemplateView.xaml.cs" />
     <Compile Include="NavigationBarTemplate\RuleTemplateViewModel.cs" />
+    <Compile Include="ViewModels\NewIssuer\NewIssuerPresentViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\AboutViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\CardFormatErrorViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\CardProgramDoneViewModel.cs" />
@@ -138,10 +140,13 @@
     <Compile Include="ViewModels\NewCard\NewCardTypeViewModel.cs" />
     <Compile Include="ViewModels\NewCard\NewCardVehicleNamesViewModel.cs" />
     <Compile Include="ViewModels\NewCard\NewCardVIDViewModel.cs" />
-    <Compile Include="ViewModels\NewCard\NewIssuerCardViewModel.cs" />
+    <Compile Include="ViewModels\NewIssuer\NewIssuerCardViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\NewCardWarningViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\NoRWDViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\ProgramPromptViewModel.cs" />
+    <Compile Include="Views\NewIssuer\NewIssuerPresentView.xaml.cs">
+      <DependentUpon>NewIssuerPresentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SplashView\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -206,7 +211,7 @@
     <Compile Include="Views\SplashView\NoRWDView.xaml.cs">
       <DependentUpon>NoRWDView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewCard\NewIssuerCardView.xaml.cs">
+    <Compile Include="Views\NewIssuer\NewIssuerCardView.xaml.cs">
       <DependentUpon>NewIssuerCardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashView\ProgramPromptView.xaml.cs">
@@ -223,6 +228,10 @@
     <Page Include="NavigationBarTemplate\RuleTemplateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NewIssuer\NewIssuerPresentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SplashView\AboutView.xaml">
       <SubType>Designer</SubType>
@@ -300,7 +309,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewCard\NewIssuerCardView.xaml">
+    <Page Include="Views\NewIssuer\NewIssuerCardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
