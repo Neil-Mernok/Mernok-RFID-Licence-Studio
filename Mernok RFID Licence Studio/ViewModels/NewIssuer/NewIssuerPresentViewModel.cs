@@ -71,37 +71,38 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.NavigationBar_Active = true;
                 VMReturnData.ViewTitle = "Issuer Card";
                 VMReturnData.SubTitle = "Issuer select";
-                VMReturnData.CurrentPageNumber = 1;
-                VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Hidden;
                 VMReturnData.HelpButtonEnabled = Visibility.Visible;
                 VMReturnData.BackButtonEnabled = true;
                 #endregion
 
-                if (VMReturnData.CardInField)
+                if(VMReturnData.NewCardWindow<1)
                 {
-                    cardInfoRead.UID = VMReturnData.UID;
-                    formated = cardInfoRead.Block1Info();
-                    UID = cardInfoRead.UIDtoString(VMReturnData.UID);
-                    if (formated)
+                    if (VMReturnData.CardInField)
                     {
-                        CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardFormatError.png", UriKind.Relative));
-                        WarningMessage = "Card formated, present unformated card.";
-                        MessageColour = Brushes.OrangeRed;
+                        cardInfoRead.UID = VMReturnData.UID;
+                        formated = cardInfoRead.Block1Info();
+                        UID = cardInfoRead.UIDtoString(VMReturnData.UID);
+                        if (formated)
+                        {
+                            CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardFormatError.png", UriKind.Relative));
+                            WarningMessage = "Card formated, present unformated card.";
+                            MessageColour = Brushes.OrangeRed;
+                        }
+                        else
+                        {
+                            CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
+                            VMReturnData.NextButtonEnabled = true;
+                            MessageColour = Brushes.White;
+                            WarningMessage = "Card VALID: Click next to continue";
+                        }
+
                     }
                     else
                     {
-                        CardImage = new BitmapImage(new Uri(@"/Resources/Images/CardValid.png", UriKind.Relative));
-                        VMReturnData.NextButtonEnabled = true;
-                        MessageColour = Brushes.White;
-                        WarningMessage = "Card VALID: Click next to continue";
+                        ClearDetails();
+                        VMReturnData.NextButtonEnabled = false;
                     }
-
-                }
-                else
-                {
-                    ClearDetails();
-                    VMReturnData.NextButtonEnabled = false;
                 }
 
             }
@@ -110,7 +111,6 @@ namespace Mernok_RFID_Licence_Studio
                 //View is not visible, do not update
                 //Stop any animations on this vieModel
                 View.Visibility = Visibility.Collapsed;
-                VMReturnData.NextButtonEnabled = false;
                 VMReturnData.NewIssuerCard = false;
                 VMReturnData.NewIssuerUID = 0;
             }
@@ -120,7 +120,7 @@ namespace Mernok_RFID_Licence_Studio
         private void ClearDetails()
         {
             UID = "";
-            WarningMessage = "Present Issuer card";
+            WarningMessage = "Present new card";
             this.CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
             MessageColour = Brushes.OrangeRed;
         }

@@ -74,19 +74,27 @@ namespace Mernok_RFID_Licence_Studio
                     VMReturnData.CardInField = false;
                 }
 
-                if (VMReturnData.EditCard && VMReturnData.EditCardUID != VMReturnData.UID && VMReturnData.NewCardWindow>=1)
+                if (VMReturnData.EditCard && !VMReturnData.NewIssuerCard && VMReturnData.EditCardUID != VMReturnData.UID && VMReturnData.NewCardWindow>=1)
                 {
                     VMReturnData.EditCardWarn_Active = true;
                 }
                 else
                     VMReturnData.EditCardWarn_Active = false;
 
-                if (!VMReturnData.EditCard && (VMReturnData.NewCardUID != VMReturnData.UID && VMReturnData.NewIssuerUID != VMReturnData.UID) && VMReturnData.NewCardWindow >= 1)
+                if (!VMReturnData.EditCard && !VMReturnData.NewIssuerCard && VMReturnData.NewCardUID != VMReturnData.UID && VMReturnData.NewCardWindow >= 1)
                 {
                     VMReturnData.NewCardWarn_Active = true;
                 }
                 else
                     VMReturnData.NewCardWarn_Active = false;
+
+                //if (!VMReturnData.EditCard && VMReturnData.NewIssuerCard && VMReturnData.NewIssuerUID != VMReturnData.UID && VMReturnData.NewCardWindow >= 1)
+                //{
+                //    VMReturnData.NewCardWarn_Active = true;
+                //}
+                //else
+                //    VMReturnData.NewCardWarn_Active = false;
+
             }
 
             VMReturnData.StartUpView_Active = VMReturnData.RWD_connected;
@@ -110,10 +118,13 @@ namespace Mernok_RFID_Licence_Studio
                 VMReturnData.NavigationBar_Active = false;
             }
 
+            VMReturnData.CurrentPageNumber = VMReturnData.NewCardWindow+1;
+            VMReturnData.TotalPageNumber = 4;
+
             #endregion
 
 
-            if(NextbtnPressed)
+            if (NextbtnPressed)
             {
                 VMReturnData.NextWindow();
                 NextbtnPressed = false;

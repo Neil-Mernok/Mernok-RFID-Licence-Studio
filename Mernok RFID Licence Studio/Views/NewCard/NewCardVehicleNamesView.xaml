@@ -31,10 +31,12 @@
 
         <!--Row 3-->
         <Label Content="Vehicle Names:" Foreground="White" HorizontalContentAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"   FontSize="25"/>
-        <TextBox Text="{Binding VehicleName}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"  FontSize="25" Width="400" Height="50"/>
-        <Button Name="AddBtn" Command="{Binding AddBtn}" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left" IsEnabled="{Binding BtnAddEnabled}"  FontSize="25" Width="100"/>
+        <TextBox Text="{Binding VehicleName}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalContentAlignment="Center"  FontSize="25" Width="400" Height="50" TextChanged="TextBox_TextChanged"/>
+        <Button Name="AddBtn" Grid.Row="3" Grid.Column="3" Content="Add" HorizontalAlignment="Left"   FontSize="25" Width="150" 
+                Command="{Binding AddBtn}" IsEnabled="{Binding BtnAddEnabled}"/>
 
         <!--Row 4-->
+        <Button x:Name="Remove" Grid.Row="4" Grid.Column="2" Content="Remove" HorizontalAlignment="Left" Height="50"  FontSize="25" Width="150" Command="{Binding RemoveBtn}" IsEnabled="{Binding BtnremoveEnabled}"/>
         <Label Content="Vehicle Name List:" Foreground="White" HorizontalContentAlignment="Right" Grid.Row="4" Grid.Column="0"   FontSize="25"/>
         <ListBox Name="Vehicles" Grid.Row="4" Grid.Column="1" Grid.RowSpan="4" ItemsSource="{Binding DisplayVehicleList}" FontSize="25">
 

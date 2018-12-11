@@ -17,6 +17,7 @@ namespace Mernok_RFID_Licence_Studio
         private ObservableCollection<string> _vehicleList = new ObservableCollection<string>();
         private ObservableCollection<string> _DisplayVehicleList = new ObservableCollection<string>();
         public ICommand AddBtn { get; private set; }
+        public ICommand RemoveBtn { get; private set; }      
         private bool AddbtnPressed = false;
         int index = 0;
         GeneralFunctions generalFunctions = new GeneralFunctions();
@@ -24,6 +25,7 @@ namespace Mernok_RFID_Licence_Studio
         public NewCardVehicleNamesViewModel(UserControl control) : base(control)
         {
             AddBtn = new DelegateCommand(AddbtnHandler);
+            RemoveBtn = new DelegateCommand(RemoveBtnHandler);
             control.DataContext = this;
             _viewInstance = (NewCardVehicleNamesView)control;
         }
@@ -68,7 +70,14 @@ namespace Mernok_RFID_Licence_Studio
                     {
                         VMReturnData.VMCardDetails.VehicleNames[i] = VehicleInfoList[i];
                     }
-                    ByEnabled = BtnAddEnabled = true;
+                    if(VehicleInfoList.Count<15 && VehicleName != "")
+                    {
+                        ByEnabled = BtnAddEnabled = true;
+                    }
+                    else
+                    {
+                        ByEnabled = BtnAddEnabled = false;
+                    }
                     VMReturnData.NextButtonEnabled = VehicleInfoList.Count() > 0 ? true : false;
                     VMReturnData.VMCardDetails.ByPassBits = (uint)(VMReturnData.VMCardDetails.ByPassBits & ~0b00000100);
                 }
@@ -82,6 +91,8 @@ namespace Mernok_RFID_Licence_Studio
                         VehicleInfoList.Add(VehicleName);                        
                         index++;
                     }
+                    else
+                        BtnAddEnabled = false;
 
                     for (int i = index; i < 15; i++)
                     {
@@ -91,8 +102,30 @@ namespace Mernok_RFID_Licence_Studio
                     VehicleName = "";
                     AddbtnPressed = false;
                 }
-                
-                RaisePropertyChanged("VehicleInfoList");
+
+                if (RemovebtnPressed)
+                {
+                    RemovebtnPressed = false;
+                    if (VehicleInfoList.Count() > 0)
+                    {
+                        BtnremoveEnabled = true;
+                        index--;
+                        VMReturnData.VMCardDetails.VehicleNames[index] = null;
+                        VehicleInfoList.RemoveAt(VehicleInfoList.Count - 1);
+
+                    }
+
+                }
+
+                if (VehicleInfoList.Count() > 0)
+                {
+                    BtnremoveEnabled = true;
+                }
+                else
+                {
+                    BtnremoveEnabled = false;
+                }
+
             }
             else
             {
@@ -103,6 +136,7 @@ namespace Mernok_RFID_Licence_Studio
             }
         }
 
+        #region Binding properties
         public ObservableCollection<string> VehicleInfoList
         {
             get { return _vehicleList; }
@@ -133,6 +167,8 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool _ByEnabled;
         private bool _btnAddEnabled = true;
+        private bool _BtnremoveEnabled;
+        private bool RemovebtnPressed;
 
         public bool ByEnabled
         {
@@ -153,12 +189,31 @@ namespace Mernok_RFID_Licence_Studio
             }
         }
 
+        public bool BtnremoveEnabled
+        {
+            get
+            {
+                return _BtnremoveEnabled;
+            }
+            private set
+            {
+                _BtnremoveEnabled = value;
+                RaisePropertyChanged("BtnremoveEnabled");
+            }
+        }
+        #endregion
+
         public void AddbtnHandler()
         {
             AddbtnPressed = true;
         }
 
+        private void RemoveBtnHandler()
+        {
+            RemovebtnPressed = true;
+        }
 
+        
     }
 
 

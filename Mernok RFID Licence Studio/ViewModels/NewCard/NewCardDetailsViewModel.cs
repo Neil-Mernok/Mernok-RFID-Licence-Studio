@@ -62,8 +62,8 @@ namespace Mernok_RFID_Licence_Studio
                 #region Navigation bar
                 VMReturnData.ViewTitle = VMReturnData.EditCard ? "Edit Card" : "New Card";
                 VMReturnData.SubTitle = "Operator details";
-                VMReturnData.CurrentPageNumber = 2;
-                VMReturnData.TotalPageNumber = 4;
+                //VMReturnData.CurrentPageNumber = 2;
+                //VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
                 VMReturnData.BackButtonEnabled = true;
                 VMReturnData.HelpButtonEnabled = Visibility.Visible;
@@ -81,15 +81,15 @@ namespace Mernok_RFID_Licence_Studio
                 //    CardImage = new BitmapImage(new Uri(@"/Resources/Images/PresentCard.png", UriKind.Relative));
                 //}
 
-                if (VMReturnData.VMCardDetails.IssuerUID == VMReturnData.UID)
-                {
-                    VMReturnData.CardStillIssuer = true;
-                    UID = "Issuer Card in field";
-                }
-                else
-                {
-                    VMReturnData.CardStillIssuer = false;
-                }
+                //if (VMReturnData.VMCardDetails.IssuerUID == VMReturnData.UID)
+                //{
+                //    VMReturnData.CardStillIssuer = true;
+                //    UID = "Issuer Card in field";
+                //}
+                //else
+                //{
+                //    VMReturnData.CardStillIssuer = false;
+                //}
                
 
                 if (!onetimeread)

@@ -24,5 +24,11 @@ namespace Mernok_RFID_Licence_Studio
         {
             InitializeComponent();
         }
+
+        public void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var binding = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
+            binding.UpdateSource();
+        }
     }
 }

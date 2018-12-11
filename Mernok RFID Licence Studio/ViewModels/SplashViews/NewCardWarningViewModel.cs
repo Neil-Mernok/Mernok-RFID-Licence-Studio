@@ -30,7 +30,10 @@ namespace Mernok_RFID_Licence_Studio
             {
                 RFIDCardInfoRead rFIDCardInfoRead = new RFIDCardInfoRead();
                 this.View.Visibility = Visibility.Visible;
-                NewcardUID = rFIDCardInfoRead.UIDtoString(VMReturnData.NewCardUID);
+                if (VMReturnData.NewIssuerCard)
+                    NewcardUID = rFIDCardInfoRead.UIDtoString(VMReturnData.NewIssuerUID);
+                else
+                    NewcardUID = rFIDCardInfoRead.UIDtoString(VMReturnData.NewCardUID);
             }
             else
                 this.View.Visibility = Visibility.Collapsed;

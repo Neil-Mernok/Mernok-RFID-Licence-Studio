@@ -102,7 +102,7 @@ namespace Mernok_RFID_Licence_Studio
         //global button events
         public void NextWindow()
         {
-            if(NewIssuerPresent_Active)
+            if (NewIssuerPresent_Active)
             {
                 NewIssuerUID = UID;
             }
@@ -139,12 +139,12 @@ namespace Mernok_RFID_Licence_Studio
             }
             if(NewCardWindow==3)
             {
-                if(CardStillIssuer)
-                {
-                    CardStillIssuer_Active = true;
-                    NewCardWindow--;
-                }
-                else 
+                //if(CardStillIssuer)
+                //{
+                //    CardStillIssuer_Active = true;
+                //    NewCardWindow--;
+                //}
+                //else 
                 {
                    ProgramPromtView_Active = true;
                 }
@@ -160,7 +160,7 @@ namespace Mernok_RFID_Licence_Studio
             
             if(NewCardWindow==0)
             {
-                NewCardAccess_Active = NewCardIssuer_Active = false;
+                NewCardAccess_Active = NewCardIssuer_Active = NewIssuerPresent_Active = false;
                 EditCard = false;
             }
             if (NewCardWindow==1)
