@@ -109,8 +109,13 @@ namespace Mernok_RFID_Licence_Studio
             NewCardWindow++;
             if (NewCardWindow==1)
             {
-                NewCardIssuer_Active = false;
-                NewCardDetail_Active = true;
+                if(NewCardIssuer_Active)
+                {
+                    NewCardIssuer_Active = false;
+                    NewCardWindow = 3;
+                }
+                else
+                    NewCardDetail_Active = true;
             }
             if (NewCardWindow==2)
             {
@@ -174,6 +179,9 @@ namespace Mernok_RFID_Licence_Studio
             }
 
             NewCardWindow--;
+
+            if(NewCardWindow<0)
+                NewCardWindow = 0;
 
         }
 

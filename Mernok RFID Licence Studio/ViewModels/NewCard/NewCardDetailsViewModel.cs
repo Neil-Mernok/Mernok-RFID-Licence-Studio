@@ -109,9 +109,16 @@ namespace Mernok_RFID_Licence_Studio
                             //AccessLevelList.Where(t => t.Equals("Operator") || t.Equals("Temporary Operator") || t.Equals("Trainee Operator")).ToList();
                             AccessLevelList.Add(Level);
                         }
-                        else if (((char)VMReturnData.IssuerAccess == 'Z')|| VMReturnData.NewIssuerCard)
+                        else if ((char)VMReturnData.IssuerAccess == 'Z')
                         {
                             AccessLevelList.Add(Level);
+                        }
+                        else if(VMReturnData.NewIssuerCard)
+                        {
+                            if(!Level.Contains("Mernok"))
+                            {
+                                AccessLevelList.Add(Level);
+                            }
                         }
 
                     }
@@ -138,6 +145,8 @@ namespace Mernok_RFID_Licence_Studio
                     else if ((char)VMReturnData.IssuerAccess == 'C')
                     {
                         ClientEdit = false;
+                        ClientCodenum = (int)VMReturnData.VMCardDetails.Client_Group;
+                        ClientSitenum = Math.Abs(ClientSite.IndexOf(ClientSite.Where(T => T == mernokClientFile.mernokClientList[(int)VMReturnData.VMCardDetails.Client_Site].ClientSiteName).First()));
                     }
 
                     VMReturnData.VMCardDetails.Issue_Date = DateTime.Now;

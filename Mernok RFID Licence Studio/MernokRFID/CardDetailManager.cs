@@ -42,15 +42,15 @@ namespace Mernok_RFID_Licence_Studio
         public static string CardDetailContent { get; set; }
         //todo: Change this to accept a path for the file
         //       public static MernokAssetFile ReadMernokAssetFile(string filename)
-        public static CardDetailsFile ReadCardDetailFile()
+        public static CardDetailsFile ReadCardDetailFile(string FileName)
         {
             //todo: add exception handling
             //Try Read the XML file
             XmlSerializer deserializer = new XmlSerializer(typeof(CardDetailsFile));
             string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
             //TextReader reader = new StreamReader(Environment.CurrentDirectory + @"\C2xxParameters.xml");
-            TextReader reader = new StreamReader(@"C:\MernokAssets\MernokAssetList.xml");
-            //           TextReader reader = new StreamReader(filename);//(Environment.CurrentDirectory + @"\C2xxParameters.xml");
+            //TextReader reader = new StreamReader(@"C:\MernokAssets\MernokAssetList.xml");
+            TextReader reader = new StreamReader(FileName);//(Environment.CurrentDirectory + @"\C2xxParameters.xml");
             CardDetailContent = reader.ReadToEnd();
             reader = new StringReader((string)CardDetailContent.Clone());
             object obj = deserializer.Deserialize(reader);

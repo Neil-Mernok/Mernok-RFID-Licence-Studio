@@ -34,6 +34,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -46,22 +47,25 @@
         </Button>
 
         <!--Row2-->
-        <Button Content="About Application"  Command="{Binding AboutBtn}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70"  FontSize="30" />
+        <Button Content="About Application"  Command="{Binding AboutBtn}" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60"  FontSize="30" />
         
 <!--Row3-->
-        <Button Content="Select different RWD"  Command="{Binding RWDselectBtn}" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <Button Content="Select different RWD"  Command="{Binding RWDselectBtn}" Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
 
 <!--Row4-->
-        <Button Content="Request new Issuer Card"  Command="{Binding IssuerCardBtn}" Grid.Row="4" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <Button Content="Request new Issuer Card"  Command="{Binding IssuerCardBtn}" Grid.Row="4" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
 
         <!--Row5-->
-        <Button Content="Create new Issuer Card from file"  Command="{Binding IssuerFileCardBtn}" Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <Button Content="Create new Issuer Card from file"  Command="{Binding IssuerFileCardBtn}" Grid.Row="5" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
 
-        <!--Row5-->
-        <Button Content="Format Card"  Command="{Binding Formatbtn}" Grid.Row="6" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <!--Row6-->
+        <Button Content="Format Card"  Command="{Binding Formatbtn}" Grid.Row="6" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
 
-        <!--Row5-->
-        <Button Content="Hot Flag Card"  Command="{Binding HotFlag}" Grid.Row="7" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="70" FontSize="30" />
+        <!--Row7-->
+        <Button Content="Hot Flag Card"  Command="{Binding HotFlag}" Grid.Row="7" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
+
+        <!--Row7-->
+        <Button Content="Advanced Settings"  Command="{Binding AdvancedSet}" Grid.Row="8" Grid.Column="1" Style="{StaticResource ButtonErrorStyle}" Height="60" FontSize="30" />
 
 
 

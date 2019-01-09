@@ -26,12 +26,15 @@ namespace Mernok_RFID_Licence_Studio
 
         public ICommand Formatbtn { get; private set; }
 
+        public ICommand AdvancedSet { get; private set; }
+
         private bool AboutBtnPressed = false;
 
         private bool IssuerCardBtnPressed = false;
 
         private bool IssuerFileCardBtnPressed = false;
 
+        private bool _AdvancedSet = false; // to do for creating mernok cards
 
         private bool _buttonExitPressed = false;
 
@@ -90,7 +93,7 @@ namespace Mernok_RFID_Licence_Studio
             {
                 VMReturnData.OptionsPressed = true;
                 this.View.Visibility = Visibility.Visible;
-                VMReturnData.NavigationBar_Active = false;
+ //               VMReturnData.NavigationBar_Active = false;
                 EditCardVis = VMReturnData.MenuEditBtnEnabled;
                 IssueCardVis = VMReturnData.MenuIssueBtnEnabled;
 
@@ -161,6 +164,7 @@ namespace Mernok_RFID_Licence_Studio
                 {
                     IssuerFileCardBtnPressed = false;
                     VMReturnData.NewCardIssuer_Active = true;
+ //                   VMReturnData.MenuView_Active = false;
                 }
                 
 

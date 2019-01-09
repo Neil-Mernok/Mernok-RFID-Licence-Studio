@@ -113,6 +113,10 @@ namespace Mernok_RFID_Licence_Studio
             {
                 VMReturnData.NavigationBar_Active = true;
             }
+            else if (VMReturnData.NewCardIssuer_Active)
+            {
+                VMReturnData.NavigationBar_Active = true;
+            }
             else
             {
                 VMReturnData.NavigationBar_Active = false;

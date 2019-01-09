@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using MernokPasswords;
+using Microsoft.Win32;
 
 namespace Mernok_RFID_Licence_Studio
 {
@@ -17,8 +19,12 @@ namespace Mernok_RFID_Licence_Studio
         RFIDCardInfoRead cardInfoRead = new RFIDCardInfoRead();
         PasswordFinder passwordFinder = new PasswordFinder();
         private const string V = @"C:\Passwords\MernokPasswordMasterList.xml";
+        public string LicenseFilePath;
         public static MernokPasswordFile mernokPasswordFile = new MernokPasswordFile();
+        public CardDetailsFile CardDetailsFile = new CardDetailsFile();
 
+        public ICommand IssuerFileBtn { get; private set; }
+        private bool IssuerFileCardBtnPressed = false;
 
         uint CardinFieldUID = 0;
 
@@ -26,10 +32,15 @@ namespace Mernok_RFID_Licence_Studio
         {
             PassColour = Brushes.OrangeRed;
             mernokPasswordFile = MernokPasswordManager.ReadMernokPasswordFile(V);
+            IssuerFileBtn = new DelegateCommand(IssuerFileCardBtnHandler);
             control.DataContext = this;
             _viewInstance = (NewIssuerCardView)control;
         }
 
+        private void IssuerFileCardBtnHandler()
+        {
+            IssuerFileCardBtnPressed = true;
+        }
 
         public override void Update(ViewModelReturnData VMReturnData)
         {
@@ -40,21 +51,51 @@ namespace Mernok_RFID_Licence_Studio
                 this.View.Visibility = Visibility.Visible;
 
                 #region Navigationbar details
-                VMReturnData.ViewTitle = VMReturnData.EditCard ? "Edit Card" : "New Card";
+                VMReturnData.ViewTitle = "New Issuer Card";
                 VMReturnData.SubTitle = "New Issuer details";
-                VMReturnData.CurrentPageNumber = 1;
-                VMReturnData.TotalPageNumber = 4;
-
+                //VMReturnData.CurrentPageNumber = 1;
+                //VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
                 VMReturnData.HelpButtonEnabled = Visibility.Visible;
                 #endregion
 
-                if (!VMReturnData.CardInField)
+                if (IssuerFileCardBtnPressed)
                 {
-                    WarningMessageI = "Present RFID card";
-                    MessageColour = Brushes.OrangeRed;
+                    IssuerFileCardBtnPressed = false;
+
+                    OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                    openFileDialog1.Filter = "License Files|*.merlic";
+                    openFileDialog1.Title = "Select a Mernok Licnese File";
+                    if (openFileDialog1.ShowDialog()==true)
+                    {
+                        // Assign the cursor in the Stream to the Form's Cursor property.  
+                        Console.WriteLine(Path.GetFullPath(openFileDialog1.FileName));
+                        LicenseFilePath = Path.GetFullPath(openFileDialog1.FileName);
+                        CardDetailsFile = CardDetailManager.ReadCardDetailFile(LicenseFilePath);
+                        VMReturnData.VMCardDetails = CardDetailsFile.FCardDetails;
+                        VMReturnData.NewCardUID = CardDetailsFile.FCardDetails.cardUID;
+    }
+
+                    //
+                }
+
+                if(CardDetailsFile.FCardDetails == null)
+                {
+                    WarningMessageF = "Please select a license file.";
+                    CardUidPresVis = Visibility.Collapsed;
                 }
                 else
+                {
+                    CardUidPresVis = Visibility.Visible;
+                }
+
+                if (!VMReturnData.CardInField)
+                {
+                    if(CardDetailsFile.FCardDetails != null)
+                        WarningMessageI = "Present RFID card with UID: " + VMReturnData.cardInfoRead.UIDtoString(CardDetailsFile.FCardDetails.cardUID);
+                    MessageColour = Brushes.OrangeRed;
+                }
+                else if(CardDetailsFile.FCardDetails != null && CardDetailsFile.FCardDetails.cardUID == VMReturnData.UID)
                 {
 
                     VMReturnData.VMCardDetails.IssuerUID = CardinFieldUID = VMReturnData.UID;
@@ -156,6 +197,23 @@ namespace Mernok_RFID_Licence_Studio
             get { return _MessageColour; }
             set { _MessageColour = value; base.RaisePropertyChanged("MessageColour"); }
         }
+
+        private string _WarningMessageF;
+
+        public string WarningMessageF
+        {
+            get {return _WarningMessageF; }
+            set { _WarningMessageF = value; RaisePropertyChanged("WarningMessageF"); }
+        }
+
+        private Visibility _CardUidPresVis;
+
+        public Visibility CardUidPresVis
+        {
+            get { return _CardUidPresVis; }
+            set { _CardUidPresVis = value; RaisePropertyChanged("CardUidPresVis"); }
+        }
+
 
         #endregion
     }

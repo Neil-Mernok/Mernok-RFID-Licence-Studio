@@ -167,6 +167,8 @@ namespace Mernok_RFID_Licence_Studio
                             VMReturnData.VMCardDetails.EngineerName = cardInfoRead.cardDetails.EngineerName;
                             VMReturnData.VMCardDetails.IssuerUID = cardInfoRead.cardDetails.IssuerUID;
                             VMReturnData.VMCardDetails.EngineerUID = cardInfoRead.cardDetails.EngineerUID;
+                            VMReturnData.VMCardDetails.Client_Group = cardInfoRead.cardDetails.Client_Group;
+                            VMReturnData.VMCardDetails.Client_Site = cardInfoRead.cardDetails.Client_Site;
 
                         }
                         else
