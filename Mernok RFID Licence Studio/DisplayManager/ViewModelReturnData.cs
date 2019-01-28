@@ -20,6 +20,7 @@ namespace Mernok_RFID_Licence_Studio
         public uint IssuerUID = 0;
         public uint NewCardUID = 0;
         public uint NewIssuerUID = 0;
+        public uint NewMernokUID = 0;
         public int NumberofRWD = 0;
         public bool cardChanged = false;
         public bool RWD_connected = false;
@@ -36,6 +37,7 @@ namespace Mernok_RFID_Licence_Studio
         public bool EditCard = false;
         public bool IssuerCardTime = false;
         public bool NewIssuerCard = false;
+        public bool NewMernokCard = false;
         public CardDetails VMCardDetails = new CardDetails();
         public CardDetails CopiedVMCardDetails = new CardDetails();
         public RFIDCardInfoWrite CardInfoWrite = new RFIDCardInfoWrite();
@@ -77,6 +79,7 @@ namespace Mernok_RFID_Licence_Studio
         public bool ExitPromtView_Active = false;
         public bool ProgramPromtView_Active = false;
         public bool MenuView_Active = false;
+        public bool AdvancedMenu_Active = false;
         public bool NewIssuerPresent_Active = false;
 
         //descriptive windows
@@ -93,6 +96,8 @@ namespace Mernok_RFID_Licence_Studio
         public bool CardStillIssuer_Active = false;
         public bool EditCardWarn_Active = false;
         public bool NewCardWarn_Active = false;
+        public bool MernokCardPresent_active = false;
+        public bool AdvancedPWMenu_Active = false; 
 
         //messages
         public bool CardProramed_done = false;
@@ -233,8 +238,9 @@ namespace Mernok_RFID_Licence_Studio
             VMCardDetails = new CardDetails();
             CardRead_Done = false;
             NavigationBar_Active = false;
-            NewCardAccess_Active = LicenceView_Active = NewCardDetail_Active = NewCardVID_Active = NewCardVNames_Active = NewCardGroup_Active = NewCardType_Active = NewIssuerPresent_Active = NewCardIssuer_Active = false;
+            NewCardAccess_Active = LicenceView_Active = NewCardDetail_Active = NewCardVID_Active = NewCardVNames_Active = NewCardGroup_Active = NewCardType_Active = NewIssuerPresent_Active = NewCardIssuer_Active = AdvancedMenu_Active = MenuView_Active = false;
             EditCard = false;
+            NewMernokCard = false;
             NewCardWindow = 0;
         }
 

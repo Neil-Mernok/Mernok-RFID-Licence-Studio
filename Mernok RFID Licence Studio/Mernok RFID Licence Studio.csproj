@@ -123,8 +123,11 @@
     <Compile Include="Infrastructure\IRaiseCanExecuteChanged.cs" />
     <Compile Include="NavigationBarTemplate\RuleTemplateView.xaml.cs" />
     <Compile Include="NavigationBarTemplate\RuleTemplateViewModel.cs" />
+    <Compile Include="ViewModels\MernokCard\NewMernokCardViewModel.cs" />
     <Compile Include="ViewModels\NewIssuer\NewIssuerPresentViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\AboutViewModel.cs" />
+    <Compile Include="ViewModels\SplashViews\AdvancedMenuViewModel.cs" />
+    <Compile Include="ViewModels\SplashViews\AdvancedPasswordViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\CardFormatErrorViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\CardProgramDoneViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\CardProgramFailViewModel.cs" />
@@ -144,11 +147,20 @@
     <Compile Include="ViewModels\SplashViews\NewCardWarningViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\NoRWDViewModel.cs" />
     <Compile Include="ViewModels\SplashViews\ProgramPromptViewModel.cs" />
+    <Compile Include="Views\MernokCard\NewMernokCardView.xaml.cs">
+      <DependentUpon>NewMernokCardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewIssuer\NewIssuerPresentView.xaml.cs">
       <DependentUpon>NewIssuerPresentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashView\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashView\AdvancedMenuView.xaml.cs">
+      <DependentUpon>AdvancedMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashView\AdvancedPasswordView.xaml.cs">
+      <DependentUpon>AdvancedPasswordView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashView\CardProgramFail.xaml.cs">
       <DependentUpon>CardProgramFail.xaml</DependentUpon>
@@ -229,11 +241,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MernokCard\NewMernokCardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\NewIssuer\NewIssuerPresentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SplashView\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashView\AdvancedMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashView\AdvancedPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -473,5 +497,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Buttons\Edit.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

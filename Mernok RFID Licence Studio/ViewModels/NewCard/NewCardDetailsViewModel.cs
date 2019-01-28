@@ -36,6 +36,7 @@ namespace Mernok_RFID_Licence_Studio
 
         bool onetimeread = false;
         bool onetimeWrite = false;
+        bool onetimeWrite2 = false;
 
 
         public NewCardDetailsViewModel(UserControl control) : base(control)
@@ -61,7 +62,10 @@ namespace Mernok_RFID_Licence_Studio
 
                 #region Navigation bar
                 VMReturnData.ViewTitle = VMReturnData.EditCard ? "Edit Card" : "New Card";
-                VMReturnData.SubTitle = "Operator details";
+                if(VMReturnData.NewMernokCard)
+                    VMReturnData.SubTitle = "Engineer details";
+                else
+                    VMReturnData.SubTitle = "Operator details";
                 //VMReturnData.CurrentPageNumber = 2;
                 //VMReturnData.TotalPageNumber = 4;
                 VMReturnData.MenuButtonEnabled = Visibility.Collapsed;
@@ -109,7 +113,7 @@ namespace Mernok_RFID_Licence_Studio
                             //AccessLevelList.Where(t => t.Equals("Operator") || t.Equals("Temporary Operator") || t.Equals("Trainee Operator")).ToList();
                             AccessLevelList.Add(Level);
                         }
-                        else if ((char)VMReturnData.IssuerAccess == 'Z')
+                        else if ((char)VMReturnData.IssuerAccess == 'Z' || VMReturnData.NewMernokCard)
                         {
                             AccessLevelList.Add(Level);
                         }
@@ -136,7 +140,7 @@ namespace Mernok_RFID_Licence_Studio
                     ClientSitenum = 0;
                     ProductCode = mernokProductFile.mernokProductList.Select(t => t.ProductName).ToList();
                     ProductList_ret = 0;
-                    if (((char)VMReturnData.IssuerAccess == 'Z')|| VMReturnData.NewIssuerCard)
+                    if (((char)VMReturnData.IssuerAccess == 'Z')|| VMReturnData.NewIssuerCard || VMReturnData.NewMernokCard)
                     {
                         ClientEdit = true;
                         AccessEdit = true;
@@ -173,7 +177,27 @@ namespace Mernok_RFID_Licence_Studio
                     onetimeWrite = true;
                 }
 
-                if(Conditioning())
+                if (VMReturnData.NewMernokCard && !onetimeWrite2)
+                {
+                    OperatorName = "Mernok";
+                    ClientCodenum = 18;
+                    ClientSitenum = 0;
+                    ProductList_ret = 0;
+                    OperationalArea = 1.ToString();
+                    TrainDate = DateTime.Now.AddDays(-1);
+                    AccessLevelnum = (int)Math.Abs(AccessLevelList.IndexOf((RFIDCardInfoRead.AccessLevel_enum.Mernok_Engineer.ToString().Replace("_", " "))));
+                    VehicleAccessType_ret = VMReturnData.CopiedVMCardDetails.Options;
+                    ExpiryDate = DateTime.Now.AddMonths(1).AddDays(1);
+                    WarningDate = DateTime.Now.AddMonths(1);
+                    onetimeWrite2 = true;
+                    VMReturnData.VMCardDetails.EngineerName = "Mernok Electronik";
+                    VMReturnData.VMCardDetails.Issue_Date = DateTime.Now;
+                    VMReturnData.VMCardDetails.IssuerUID = VMReturnData.NewMernokUID;
+                    VMReturnData.VMCardDetails.EngineerUID = 045;
+                    VMReturnData.VMCardDetails.Hotflaged_status = false;
+                }
+
+                if (Conditioning())
                 {
                     VMReturnData.NextButtonEnabled = true;
                     VMReturnData.VMCardDetails.OperatorName = OperatorName;
@@ -202,6 +226,7 @@ namespace Mernok_RFID_Licence_Studio
                 this.View.Visibility = Visibility.Collapsed;
                 onetimeread = false;
                 onetimeWrite = false;
+                onetimeWrite2 = false;
             }
         }
 

@@ -15,16 +15,12 @@ namespace Mernok_RFID_Licence_Studio
         private MenuView _viewInstance;
 
         public ICommand AboutBtn { get; private set; }
-
-        public ICommand HotFlag { get; private set; }
-
+   
         public ICommand IssuerCardBtn { get; private set; }
 
         public ICommand IssuerFileCardBtn { get; private set; }
 
-        public ICommand Exitbtn { get; private set; }
-
-        public ICommand Formatbtn { get; private set; }
+        public ICommand Exitbtn { get; private set; }        
 
         public ICommand AdvancedSet { get; private set; }
 
@@ -38,10 +34,6 @@ namespace Mernok_RFID_Licence_Studio
 
         private bool _buttonExitPressed = false;
 
-        private bool _HotflagBtnPressed = false;
-
-        private bool _FormatbtnPressed = false;
-
 
         public MenuViewModel(UserControl control) : base(control)
         {
@@ -49,25 +41,19 @@ namespace Mernok_RFID_Licence_Studio
             IssuerCardBtn = new DelegateCommand(IssuerCardBtnHandler);
             IssuerFileCardBtn = new DelegateCommand(IssuerFileCardBtnHandler);
             Exitbtn = new DelegateCommand(ExitBtnHandler);
-            HotFlag = new DelegateCommand(HotFlagBtnHandler);
-            Formatbtn = new DelegateCommand(Formatbtnhandler);
+            AdvancedSet = new DelegateCommand(AdvancedbtnHandler);
             control.DataContext = this;
             _viewInstance = (MenuView)control;
+        }
+
+        private void AdvancedbtnHandler()
+        {
+            _AdvancedSet = true;
         }
 
         private void IssuerFileCardBtnHandler()
         {
             IssuerFileCardBtnPressed = true;
-        }
-
-        private void Formatbtnhandler()
-        {
-            _FormatbtnPressed = true;
-        }
-
-        private void HotFlagBtnHandler()
-        {
-            _HotflagBtnPressed = true;
         }
 
         public void AboutBtnHandler()
@@ -105,49 +91,13 @@ namespace Mernok_RFID_Licence_Studio
 
                 }
 
-                if(_HotflagBtnPressed)
-                {
-                    CardDetails WriteCardDetails = new CardDetails() { Hotflaged_status = true, HotFlagedDate = DateTime.Now, HotFlagedVID = 123 };
-                    RFIDCardInfoWrite rFIDCardInfoWrite = new RFIDCardInfoWrite();
-                    _HotflagBtnPressed = false;
-                    byte[] temp = rFIDCardInfoWrite.Block9(WriteCardDetails);
-                    if (MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, WriteCardDetails.CommanderRFIDCardMemoryBlock + 8, temp))
-                    {
 
-                    }
-                }
 
-                if(_FormatbtnPressed)
+                if(_AdvancedSet)
                 {
-                    _FormatbtnPressed = false;
-                    RFIDCardInfoWrite rFIDCardInfoWrite = new RFIDCardInfoWrite();
-                    CardDetails WriteCardDetails = new CardDetails()
-                    {
-                        cardUID = 0,
-                        AccessLevel = 0,
-                        ByPassBits = 0,
-                        Client_Group = 0,
-                        Client_Site = 0,
-                        EngineerName = "",
-                        EngineerUID = 0,
-                        Expiry_Date = DateTime.MinValue,
-                        HotFlagedDate = DateTime.MinValue,
-                        HotFlagedVID = 0,
-                        Hotflaged_status = false,
-                        IssuerUID = 0,
-                        Issue_Date = DateTime.MinValue,
-                        OperationalArea = 0,
-                        OperatorName = "",
-                        Options = 0,
-                        ProductCode = 0,
-                        Training_Date = DateTime.MinValue,
-                        VehicleGroup = Enumerable.Repeat((byte)0, 16).ToArray(),
-                        VID = Enumerable.Repeat((UInt16)0, 16).ToArray(),
-                        VehicleNames = Enumerable.Repeat("", 16).ToArray(),
-                        VehicleLicenceType = Enumerable.Repeat((uint)0, 32).ToArray(),
-                        Warning_Date = DateTime.MinValue
-                    };
-                    rFIDCardInfoWrite.WriteInfoToCard(WriteCardDetails);
+                    _AdvancedSet = false;
+                    VMReturnData.AdvancedPWMenu_Active = true;
+
                 }
 
                 if (IssuerCardBtnPressed)
