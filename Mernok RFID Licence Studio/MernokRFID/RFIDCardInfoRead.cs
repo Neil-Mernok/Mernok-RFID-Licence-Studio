@@ -148,7 +148,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output;
             if (UID!=0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock, out output))
+                if (MernokRFID_interface.Mifair_Read_Block(Mifare_key.A, 0, cardDetails.CommanderRFIDCardMemoryBlock, out output))
                 {
                     if (output[2] == 0)
                         return false;
@@ -253,7 +253,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1, output2;
             if (UID != 0)
             {
-                if ((MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+3, out output1)) && (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+4, out output2)))
+                if ((MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+4, out output1)) && (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+5, out output2)))
                 {
                     VIDs_read(output1, output2);
                     return true;
@@ -280,7 +280,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+5, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+6, out output1))
                 {
                     OperatorName_read(output1);
                     return true;
@@ -349,7 +349,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+6, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+8, out output1))
                 {
                     IssuerUID_read(output1);
                     Training_Date_read(output1);
@@ -380,7 +380,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+7, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+9, out output1))
                 {
                     EngineerName_read(output1);
                     return true;
@@ -429,7 +429,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+8, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+10, out output1))
                 {
                     HotFlagedDate_read(output1);
                     HotFlagVID_read(output1);
@@ -461,7 +461,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+9, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock+12, out output1))
                 {
                     VehicleGroup_read(output1);
                     return true;
@@ -485,7 +485,7 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 10, out output1))
+                if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 13, out output1))
                 {
                     ReadProductCode(output1);
                     return true;
@@ -511,11 +511,55 @@ namespace Mernok_RFID_Licence_Studio
             byte[] output1;
             if (UID != 0)
             {
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < 3; i++) //block1
                 {
                     if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock +16+ i, out output1))
                     {
                         VehicleName_read(output1, i);
+                        //return true;
+                    }
+                    else
+                        return false;
+                }
+
+                for (int i = 0; i < 3; i++)//block2
+                {
+                    if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 20 + i, out output1))
+                    {
+                        VehicleName_read(output1, i+3);
+                        //return true;
+                    }
+                    else
+                        return false;
+                }
+
+                for (int i = 0; i < 3; i++)//block3
+                {
+                    if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 28 + i, out output1))
+                    {
+                        VehicleName_read(output1, i+6);
+                        //return true;
+                    }
+                    else
+                        return false;
+                }
+
+                for (int i = 0; i < 3; i++)//block4
+                {
+                    if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 32 + i, out output1))
+                    {
+                        VehicleName_read(output1, i+9);
+                        //return true;
+                    }
+                    else
+                        return false;
+                }
+
+                for (int i = 0; i < 3; i++)//block5
+                {
+                    if (MernokRFID_interface.Mifair_Read_Block(0, 0, cardDetails.CommanderRFIDCardMemoryBlock + 36 + i, out output1))
+                    {
+                        VehicleName_read(output1, i+12);
                         //return true;
                     }
                     else

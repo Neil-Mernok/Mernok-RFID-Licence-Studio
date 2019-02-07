@@ -34,6 +34,11 @@ namespace Mernok_RFID_Licence_Studio
 
         GeneralFunctions generalFunctions = new GeneralFunctions();
 
+        public ICommand AccesstypeHelpbtn { get; private set; }
+
+        public ICommand AccessHelpbtn { get; private set; }
+        
+
         bool onetimeread = false;
         bool onetimeWrite = false;
         bool onetimeWrite2 = false;
@@ -48,9 +53,22 @@ namespace Mernok_RFID_Licence_Studio
             WarningDateMax = DateTime.Now.AddYears(1);
             DateStart = DateTime.Now;
 
+            AccessHelpbtn = new DelegateCommand(AccessHelpbtnHandler);
+            AccesstypeHelpbtn = new DelegateCommand(AccesstypeHelpbtnHandler);
+
             control.DataContext = this;
             
             _viewInstance = (NewCardDetails1View)control;
+        }
+
+        private void AccessHelpbtnHandler()
+        {
+            AboutBtnPressed = true;
+        }
+
+        private void AccesstypeHelpbtnHandler()
+        {
+            AboutTypeBtnPressed = true;
         }
 
         public override void Update(ViewModelReturnData VMReturnData)
@@ -94,7 +112,19 @@ namespace Mernok_RFID_Licence_Studio
                 //{
                 //    VMReturnData.CardStillIssuer = false;
                 //}
-               
+                if (AboutTypeBtnPressed)
+                {
+                    AboutTypeBtnPressed = false;
+                    VMReturnData.VehicleAccessLevelHelp = true;
+                    VMReturnData.HelpButton();
+                }
+
+                if (AboutBtnPressed)
+                {
+                    AboutBtnPressed = false;
+                    VMReturnData.AccessLevelHelp = true;
+                    VMReturnData.HelpButton();
+                }
 
                 if (!onetimeread)
                 {
@@ -605,6 +635,9 @@ namespace Mernok_RFID_Licence_Studio
         }
 
         private SolidColorBrush _ClientSColour;
+        private bool AboutBtnPressed;
+        private bool AboutTypeBtnPressed;
+
         public SolidColorBrush ClientSColour { get { return _ClientSColour; } set { _ClientSColour = value; RaisePropertyChanged("UID"); } }
         #endregion
     }

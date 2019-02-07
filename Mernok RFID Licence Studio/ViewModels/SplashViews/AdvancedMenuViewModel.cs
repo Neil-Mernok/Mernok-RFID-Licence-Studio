@@ -105,7 +105,7 @@ namespace Mernok_RFID_Licence_Studio
                         VehicleLicenceType = Enumerable.Repeat((uint)0, 32).ToArray(),
                         Warning_Date = DateTime.MinValue
                     };
-                    rFIDCardInfoWrite.WriteInfoToCard(WriteCardDetails);
+                    rFIDCardInfoWrite.WriteInfoToCard(WriteCardDetails, VMReturnData.CardType);
                 }
 
 

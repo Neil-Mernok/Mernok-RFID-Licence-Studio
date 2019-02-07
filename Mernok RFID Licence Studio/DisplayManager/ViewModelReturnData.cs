@@ -32,9 +32,12 @@ namespace Mernok_RFID_Licence_Studio
             get { return _CardInField; }
             set { _CardInField = value; }
         }
+        public int CardType = 0;
         public bool CardRead_Done = false;
         public int NewCardWindow = 0;
         public bool EditCard = false;
+        public bool AccessLevelHelp = false;
+        public bool VehicleAccessLevelHelp = false;
         public bool IssuerCardTime = false;
         public bool NewIssuerCard = false;
         public bool NewMernokCard = false;
@@ -258,8 +261,29 @@ namespace Mernok_RFID_Licence_Studio
 
             if (NewCardWindow == 1)
             {
-                HelpMessage = "This window requires you to fill the required details as indicated, when these conditions are satisfied, " +
+                if(!AccessLevelHelp && !VehicleAccessLevelHelp)
+                {
+                    HelpMessage = "This window requires you to fill the required details as indicated, when these conditions are satisfied, " +
                     "an arrow will appear that will allow you to continue to the next step of creating a license card.";
+                }
+                else if(AccessLevelHelp)
+                {
+                    HelpMessage = "This is the level of access that the card hoolder will have:" +
+                        " \n 1. Only Training Officers will be able to program Operator, Trainee Operators and Temporary Operator Cards" +
+                        " \n 2. The rest will have to be requested, by means of a card program file. This file needs to be sent to a Mernok Engineer that will create a password for other access levels";
+                    AccessLevelHelp = false;
+                }
+                else if(VehicleAccessLevelHelp)
+                {
+                    HelpMessage = "This determines if the access type of the card. There are four access types:" +
+                        " \n 1. Vehicle serial numbers" +
+                        " \n 2. Vehicle names" +
+                        " \n 3. Vehicle Types" +
+                        " \n 4. Vehicle groups";
+
+                    VehicleAccessLevelHelp = false;
+                }
+                    
             }
             if (NewCardWindow == 2)
             {
@@ -267,20 +291,28 @@ namespace Mernok_RFID_Licence_Studio
                 {
                     case 1:
                         //NewCardVID_Active = true;
+                        HelpMessage = "You have to add one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card." +
+                            " \n The Add button addes the item to the list, and will be active untill the list reaches maximum capacity." +
+                            " \n The Add button will only become active if there is something to add. Fill a number into the textbox to add it to the list";
+
                         break;
 
                     case 0:
                         //NewCardType_Active = true;
-                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card.";
+                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card." +
+                            " \n The Add button addes the item to the list, and will be active untill the list reaches maximum capacity.";
                         break;
                     case 2:
                         //NewCardVNames_Active = true;
-
+                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card." +
+                            "\n The Add button addes the item to the list, and will be active untill the list reaches maximum capacity." +
+                            " \n The Add button will only become active if there is something to add. Fill a number into the textbox to add it to the list"; 
                         break;
 
                     case 3:
                         //NewCardGroup_Active = true;
-                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card.";
+                        HelpMessage = "You have to select one item from the list to continue, when the list contains an item the next button will be presented and you will be able to program these details onto the card." +
+                            " \n The Add button addes the item to the list, and will be active untill the list reaches maximum capacity.";
                         break;
 
                     default:

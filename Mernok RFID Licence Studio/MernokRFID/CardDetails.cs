@@ -9,7 +9,7 @@ namespace Mernok_RFID_Licence_Studio
     public class CardDetails
     {
         public uint cardUID;
-        public int CommanderRFIDCardMemoryBlock = 176;
+        public int CommanderRFIDCardMemoryBlock = 36; //was sector 35 (176)
 
         //Sector35 Block1
         public uint AccessLevel;                              //adress B0[0]

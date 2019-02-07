@@ -308,89 +308,123 @@ namespace Mernok_RFID_Licence_Studio
             
         }
 
-        public int WriteInfoToCard(CardDetails WriteCardDetails)
+        public int WriteInfoToCard(CardDetails WriteCardDetails, int CardType)
         {
+            byte[] key = { (byte)'S', 0, 2, 1, 3, 7 };
+            //if (MernokRFID_interface.MiFair_Store_Access_Key(0x0A, key))
+            //{
+
+            //}
+
             byte[] temp = new byte[16];
             temp = Block1(WriteCardDetails);
-            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock, temp))
+            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock, temp))//block1 address 36
             {
                 temp = Block2(WriteCardDetails);
-                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 1, temp))
+                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 1, temp))//block1 address 37
                 {
                     temp = Block3(WriteCardDetails);
-                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 2, temp))
+                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 2, temp))//block1 address 38
                     {
                         temp = Block4(WriteCardDetails);
-                        if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 3, temp))
+                        if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 4, temp))//block1 address 40
                         {
-                            temp = Block4(WriteCardDetails);
-                            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 3, temp))
+                            temp = Block5(WriteCardDetails);
+                            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 5, temp))//block1 address 41
                             {
-                                temp = Block5(WriteCardDetails);
-                                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 4, temp))
+                                temp = Block6(WriteCardDetails);
+                                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 6, temp))//block1 address 42
                                 {
-                                    temp = Block6(WriteCardDetails);
-                                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 5, temp))
+                                    temp = Block7(WriteCardDetails);
+                                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 8, temp))//block1 address 44
                                     {
-                                        temp = Block7(WriteCardDetails);
-                                        if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 6, temp))
+                                        temp = Block8(WriteCardDetails);
+                                        if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 9, temp))//block1 address 45
                                         {
-                                            temp = Block8(WriteCardDetails);
-                                            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 7, temp))
+                                            temp = Block9(WriteCardDetails);
+                                            if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 10, temp))//block1 address 46
                                             {
-                                                temp = Block9(WriteCardDetails);
-                                                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 8, temp))
+                                                temp = Block10(WriteCardDetails);
+                                                if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 12, temp))//block1 address 48
                                                 {
-                                                    temp = Block10(WriteCardDetails);
-                                                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 9, temp))
+                                                    temp = Block11(WriteCardDetails);
+                                                    if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 13, temp))//block1 address 49
                                                     {
-                                                        temp = Block11(WriteCardDetails);
-                                                        if(MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 10, temp))
+                                                        if(CardType==1 || CardType == 4) //block1 address 52
                                                         {
-                                                            for (int i = 0; i < 15; i++)
+                                                            for (int i = 0; i < 3; i++)
                                                             {
                                                                 temp = Block17_31_VehicleNames(WriteCardDetails, i);
                                                                 if (temp != null) MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, temp);
                                                                 else MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, Encoding.ASCII.GetBytes(""));
                                                             }
-                                                            return 100;
-                                                        }
-                                                        else
-                                                            return 11;
-                                                        //MessageBox.Show("Card Successfullly Programed");
 
+                                                            for (int i = 0; i < 3; i++)
+                                                            {
+                                                                temp = Block17_31_VehicleNames(WriteCardDetails, i+3);
+                                                                if (temp != null) MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 20 + i, temp);
+                                                                else MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, Encoding.ASCII.GetBytes(""));
+                                                            }
+                                                        }
+
+                                                        if(CardType==4)
+                                                        {
+                                                            for (int i = 0; i < 3; i++)
+                                                            {
+                                                                temp = Block17_31_VehicleNames(WriteCardDetails, i + 6);
+                                                                if (temp != null) MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 28 + i, temp);
+                                                                else MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, Encoding.ASCII.GetBytes(""));
+                                                            }
+
+                                                            for (int i = 0; i < 3; i++)
+                                                            {
+                                                                temp = Block17_31_VehicleNames(WriteCardDetails, i + 9);
+                                                                if (temp != null) MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 32 + i, temp);
+                                                                else MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, Encoding.ASCII.GetBytes(""));
+                                                            }
+
+                                                            for (int i = 0; i < 3; i++)
+                                                            {
+                                                                temp = Block17_31_VehicleNames(WriteCardDetails, i + 12);
+                                                                if (temp != null) MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 36 + i, temp);
+                                                                else MernokRFID_interface.Mifare_Write_Block(Mifare_key.A, 0, cardDetailsW.CommanderRFIDCardMemoryBlock + 16 + i, Encoding.ASCII.GetBytes(""));
+                                                            }
+                                                        }
+
+                                                        return 100;
                                                     }
                                                     else
-                                                        return 10;
-                                                    //MessageBox.Show("Card Programeing failed at block 10");
+                                                        return 11;
+                                                    //MessageBox.Show("Card Successfullly Programed");
+
                                                 }
                                                 else
-                                                    return 9;
-                                                //MessageBox.Show("Card Programeing failed at block 9");
+                                                    return 10;
+                                                //MessageBox.Show("Card Programeing failed at block 10");
                                             }
                                             else
-                                                return 8;
-                                            //MessageBox.Show("Card Programeing failed at block 8");
+                                                return 9;
+                                            //MessageBox.Show("Card Programeing failed at block 9");
                                         }
                                         else
-                                            return 7;
-                                        //MessageBox.Show("Card Programeing failed at block 7");
+                                            return 8;
+                                        //MessageBox.Show("Card Programeing failed at block 8");
                                     }
                                     else
-                                        return 6;
-                                    // MessageBox.Show("Card Programeing failed at block 6");
+                                        return 7;
+                                    //MessageBox.Show("Card Programeing failed at block 7");
                                 }
                                 else
-                                    return 5;
-                                // MessageBox.Show("Card Programeing failed at block 5");
+                                    return 6;
+                                // MessageBox.Show("Card Programeing failed at block 6");
                             }
                             else
-                                return 4;
-                            //MessageBox.Show("Card Programeing failed at block 4");
+                                return 5;
+                            // MessageBox.Show("Card Programeing failed at block 5");
                         }
                         else
-                            return 3;
-                        //MessageBox.Show("Card Programeing failed at block 3");
+                            return 4;
+                        //MessageBox.Show("Card Programeing failed at block 4");
                     }
                     else
                         return 2;

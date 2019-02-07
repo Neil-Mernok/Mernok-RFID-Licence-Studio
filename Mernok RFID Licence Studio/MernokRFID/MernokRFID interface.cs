@@ -276,8 +276,7 @@ namespace RFID
                 // send UID command
                 if (MernokRFID.SendRec(out retdata, "S"))
                 {
-                    //if ((retdata.Length == 9) && (retdata[0] == 0x86))                                                      // Tag answer OK
-                    if (retdata.Length > 0)
+                    if ((retdata.Length == 1) && ((retdata[0] == 0x86)|| (retdata[0] == 0x96)))                                                      // Tag answer OK
                         return retdata[0];
 
                     else
@@ -456,7 +455,7 @@ namespace RFID
 
                 if (MernokRFID.SendRec(out retdata, BR))
                 {
-                    if ((retdata.Length == 1) && ((retdata[0] == 0x86) || (retdata[0] == 0x96)))                                                      // Tag answer OK
+                    if ((retdata.Length == 1) && ((retdata[0] == 0x86) || (retdata[0] == 0x96) ))                                                      // Tag answer OK
                     {
                         return true;
                     }
@@ -493,7 +492,7 @@ namespace RFID
 
                 if (MernokRFID.SendRec(out retdata, BR))
                 {
-                    if ((retdata.Length == 1) && ((retdata[0] == 0x86) || (retdata[0] == 0x96)))                                                      // Tag answer OK
+                    if ((retdata.Length == 1) && ((retdata[0] == 0x86) || (retdata[0] == 0x96) || (retdata[0] == 0x80)))                                                      // Tag answer OK
                     {
                         return true;
                     }

@@ -49,7 +49,7 @@ namespace Mernok_RFID_Licence_Studio
             //    VMReturnData.NumberofRWD = ports.Count;
             //}
 
-            
+ //           
 
             if (!RFID.MernokRFID.IsOpen())
             {
@@ -68,6 +68,12 @@ namespace Mernok_RFID_Licence_Studio
                 if (VMReturnData.UID != 0)
                 {
                     VMReturnData.CardInField = true;
+
+                    if (RFID.MernokRFID_interface.read_Status() == 0x86)
+                        VMReturnData.CardType = 1;
+                    else if(RFID.MernokRFID_interface.read_Status() == 0x96)
+                        VMReturnData.CardType = 4;
+
                 }
                 else
                 {

@@ -62,7 +62,7 @@ namespace Mernok_RFID_Licence_Studio
                     VMReturnData.ProgramPromtView_Active = false;
                     if (!VMReturnData.NewIssuerCard)
                     {
-                        if (VMReturnData.CardInfoWrite.WriteInfoToCard(VMReturnData.VMCardDetails) == 100)
+                        if (VMReturnData.CardInfoWrite.WriteInfoToCard(VMReturnData.VMCardDetails, VMReturnData.CardType) == 100)
                         {
                             VMReturnData.CardProramed_done = true;
                             VMReturnData.App_datareset();
