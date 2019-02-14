@@ -193,3 +193,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 .vs/Mernok RFID Licence Studio/v15/Server/sqlite3/storage.ide-shm
+*.ide-shm
+*.ide-wal
